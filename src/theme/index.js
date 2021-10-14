@@ -1,21 +1,22 @@
 import { createTheme } from '@material-ui/core/styles';
-import { red } from '@material-ui/core/colors';
+import { colors } from '@material-ui/core';
 
 // Create a theme instance.
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#556cd6',
+      main: '#074EE8',
     },
     secondary: {
       main: '#19857b',
     },
     error: {
-      main: red.A400,
+      main: colors.red.A400,
     },
     background: {
-      default: '#fff',
-      lightGreen: '#fafafa'
+      default: colors.common.white,
+      dark: '#f4f6f8',
+      paper: colors.common.white,
     },
   },
 });

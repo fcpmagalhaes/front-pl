@@ -53,11 +53,11 @@ const useStyles = makeStyles((theme) => ({
 
 const primaryMenu = [
   { id: 1, label: 'Início', path: '/', icon: HomeOutlined },
-  { id: 2, label: 'Infográficos', path: '/infograficos', icon: EqualizerOutlined },
+  { id: 2, label: 'Infográficos', path: '/infografico', icon: EqualizerOutlined },
 ];
 
 const secondaryManu = [
-  { id: 1, label: 'O Projeto', icon: AccountTreeOutlined },
+  { id: 1, label: 'Ontologia', path: '/ontologia', icon: AccountTreeOutlined },
   { id: 2, label: 'Censo da Educação Superior', icon: AssignmentOutlined },
   { id: 3, label: 'Dados Abertos', icon: StorageOutlined },
   { id: 4, label: 'Sobre', icon: InfoOutlined },
@@ -75,9 +75,10 @@ function NavBar() {
       <ListItem
         button
         classes={{ root: classes.listItem }}
+        onClick={() => router.back()}
       >
         <ListItemIcon>
-          <ArrowBack  />
+          <ArrowBack />
         </ListItemIcon>
         <ListItemText
           classes={{
@@ -98,6 +99,7 @@ function NavBar() {
               button
               classes={{ root: classes.listItem }}
               selected={isSelected(item)}
+              onClick={() => router.push(`/${item.path}`)}
             >
               <ListItemIcon>
                 <Icon style={{ color: isSelected(item) && '#074EE8' }} />
@@ -122,6 +124,7 @@ function NavBar() {
               button
               classes={{ root: classes.listItem }}
               selected={isSelected(item)}
+              onClick={() => { router.push(`/${item.path}`) }}
             >
               <ListItemIcon>
                 <Icon style={{ color: isSelected(item) && '#074EE8' }} />

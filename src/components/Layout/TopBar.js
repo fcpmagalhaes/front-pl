@@ -52,9 +52,6 @@ function TopBar() {
         
         <Box display="flex">
           <IconButton className={classes.icons}>
-            <VideoCall />
-          </IconButton>
-          <IconButton className={classes.icons}>
             <Apps />
           </IconButton>
           <IconButton className={classes.icons}>

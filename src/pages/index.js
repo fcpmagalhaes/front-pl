@@ -1,4 +1,4 @@
-import React from 'react';
+import { useRouter } from 'next/router';
 import Typography from '@material-ui/core/Typography';
 import { Box, Grid, Button, makeStyles } from '@material-ui/core';
 
@@ -16,6 +16,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Home() {
   const classes = useStyles();
+  const router = useRouter();
+
   return (
     <Layout title='Consulta Microdados INEP'>
       <Box mx={4} my={2}>
@@ -38,7 +40,7 @@ export default function Home() {
               component="a"
               variant="contained"
               endIcon={<AddCircleOutlineIcon />}
-              // onClick={() => signIn('google')}
+              onClick={() => router.push('/infografico')}
             >
               Iniciar
             </Button>

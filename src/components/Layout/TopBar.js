@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     boxShadow: 'none',
     zIndex: theme.zIndex.drawer + 1,
-    backgroundColor: theme.palette.background.lightGreen,
+    backgroundColor: theme.palette.background.default,
   },
   toolbar: {
     minHeight: 56,

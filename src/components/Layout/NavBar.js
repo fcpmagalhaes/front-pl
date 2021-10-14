@@ -1,0 +1,157 @@
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+import {
+  makeStyles,
+  Hidden,
+  Drawer,
+  Box,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  ListSubheader,
+  Avatar,
+  Divider,
+  Typography,
+  Button,
+} from '@material-ui/core';
+
+import HomeOutlined from '@material-ui/icons/HomeOutlined';
+import EqualizerOutlined from '@material-ui/icons/EqualizerOutlined';
+import AccountTreeOutlined from '@material-ui/icons/AccountTreeOutlined';
+import AssignmentOutlined from '@material-ui/icons/AssignmentOutlined';
+import StorageOutlined from '@material-ui/icons/StorageOutlined';
+import InfoOutlined from '@material-ui/icons/InfoOutlined';
+import ArrowBack from '@material-ui/icons/ArrowBack';
+
+// import { signIn, useSession } from 'next-auth/client';
+
+const useStyles = makeStyles((theme) => ({
+  mobileDrawer: {
+    width: 240,
+  },
+  desktopDrawer: {
+    width: 240,
+    top: 56,
+    height: 'calc(100% - 64px)',
+    borderRight: 'none',
+  },
+  avatar: {
+    cursor: 'pointer',
+    width: 24,
+    height: 24,
+  },
+  listItem: {
+    paddingTop: 6,
+    paddingBottom: 6,
+    paddingLeft: theme.spacing(3),
+  },
+  listItemText: {
+    fontSize: 14,
+  },
+}));
+
+const primaryMenu = [
+  { id: 1, label: 'Início', path: '/', icon: HomeOutlined },
+  { id: 2, label: 'Infográficos', path: '/infograficos', icon: EqualizerOutlined },
+];
+
+const secondaryManu = [
+  { id: 1, label: 'O Projeto', icon: AccountTreeOutlined },
+  { id: 2, label: 'Censo da Educação Superior', icon: AssignmentOutlined },
+  { id: 3, label: 'Dados Abertos', icon: StorageOutlined },
+  { id: 4, label: 'Sobre', icon: InfoOutlined },
+];
+
+function NavBar() {
+  const classes = useStyles();
+  const router = useRouter();
+  // const [session] = useSession();
+
+  const isSelected = (item) => router.pathname === item.path;
+
+  const content = (
+    <Box height="100%" display="flex" flexDirection="column">
+      <ListItem
+        button
+        classes={{ root: classes.listItem }}
+      >
+        <ListItemIcon>
+          <ArrowBack  />
+        </ListItemIcon>
+        <ListItemText
+          classes={{
+            primary: classes.listItemText,
+          }}
+          primary='Voltar'
+        />
+      </ListItem>
+      
+      <Divider />
+
+      <List>
+        {primaryMenu.map((item) => {
+          const Icon = item.icon;
+          return (
+            <ListItem
+              key={item.id}
+              button
+              classes={{ root: classes.listItem }}
+              selected={isSelected(item)}
+            >
+              <ListItemIcon>
+                <Icon style={{ color: isSelected(item) && '#074EE8' }} />
+              </ListItemIcon>
+              <ListItemText
+                classes={{
+                  primary: classes.listItemText,
+                }}
+                primary={item.label}
+              />
+            </ListItem>
+          );
+        })}
+      </List>
+      <Divider />
+      <List>
+        {secondaryManu.map((item) => {
+          const Icon = item.icon;
+          return (
+            <ListItem
+              key={item.id}
+              button
+              classes={{ root: classes.listItem }}
+              selected={isSelected(item)}
+            >
+              <ListItemIcon>
+                <Icon style={{ color: isSelected(item) && '#074EE8' }} />
+              </ListItemIcon>
+              <ListItemText
+                classes={{
+                  primary: classes.listItemText,
+                }}
+                primary={item.label}
+              />
+            </ListItem>
+          );
+        })}
+      </List>
+     
+    </Box>
+  );
+
+  return (
+    <Hidden mdDown> 
+      <Drawer
+        anchor="left"
+        classes={{ paper: classes.desktopDrawer }}
+        open
+        variant="persistent"
+      >
+        {content}
+      </Drawer>
+    </Hidden>
+  );
+}
+
+export default NavBar;

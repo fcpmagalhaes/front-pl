@@ -23,7 +23,12 @@ export const iesOptions = [
       { value: 9, label: "Privada confessional" },
     ]
   },
-  {value: 3, label: 'Nome da Instituição',}
+  {value: 3, label: 'Nome da Instituição',},
+  {value: 4, label: 'teste asdfasfdadsfa',},
+  {value: 5, label: '1231tituição',},
+  {value: 6, label: 'Nomeacasdfad sfadsfstituição',},
+  {value: 7, label: 'Nome da Instituiçãasdfasdfo',},
+  {value: 8, label: 'Nome da Instituasdfas',},
 
 ];
 

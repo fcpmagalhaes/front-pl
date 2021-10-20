@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core';
 import Head from 'next/head';
@@ -45,11 +46,13 @@ function Layout({ children, title }) {
   const classes = useStyles();
   const [openNav, setOpenNav] = useState(true);
 
+  const router = useRouter();
+
   useEffect(() => {
-    if(children.props.children.props.children === 'Infograficos') {
+    if(router.pathname === '/infografico') {
       setOpenNav(false);
     }
-  }, [children])
+  }, [])
 
   return (
     <>

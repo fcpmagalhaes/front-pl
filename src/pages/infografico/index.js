@@ -3,7 +3,6 @@ import Layout from '../../components/Layout';
 import { 
   IconButton,
   Box,
-  makeStyles,
   Grid,
   List,
   ListItem,
@@ -13,9 +12,18 @@ import {
   Divider,
   Typography,
   FormControlLabel,
-  Switch
+  Switch,
+  FormGroup,
+
+  Checkbox,
+  Input,
+  InputLabel,
+  MenuItem,
+  FormControl,
+  Select,
+  Chip,
 } from '@material-ui/core';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
@@ -47,11 +55,44 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: '30px',
     paddingRight: '30px',
   },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+    maxWidth: 300,
+  },
+  chips: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  chip: {
+    margin: 2,
+  },
 
 }));
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+function getStyles(item, theme) {
+  return {
+    fontWeight:
+      verifyFilterSelected(item)
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
+
 export default function Infograficos() {
   const classes = useStyles();
+  const theme = useTheme();
 
   const [iesFilters, setIesFilters] = useState([]);
 
@@ -61,10 +102,8 @@ export default function Infograficos() {
 
   function showIcon(item) {
     if (verifyFilterSelected(item)) {
-      console.log('entrei removere');
       return (<><RemoveCircleOutlineIcon style={{ marginLeft: '10px' }} /></>);
     }
-    console.log('entrei adicionar');
     return (<><AddCircleOutlineIcon style={{ marginLeft: '10px' }}/></>);
   }
 
@@ -82,38 +121,32 @@ export default function Infograficos() {
     return iesFilters.some(filter => filter.value === item.value);
   }
 
-  
+  //verificar!
+  const handleChange = (event) => {
+    console.log('handle', event.target);
+    // setIesFilters([...iesFilters, item]);
+    // setPersonName(event.target.value);
+  };
+
 
   function refineFilters() {
-
+    console.log('entrei');
     return (
       <>
-        <List height="100%" width="100%" display="flex">
-          {iesFilters.map((item) => {
-            if(item.options) {
-              return (
-                <ListItem
-                  classes={{ root: classes.listItem }}
-                  key={item.value}>
-                    
-  
-                  
-                </ListItem>
-              );
-            }
+      <Grid container spacing={4}>
+        {
+          iesFilters.map((item) => {
             return (
-              <ListItem
-                key={item.value}
-              >
-                <FormControlLabel 
-                  control={<Switch checked/>}
+              <Grid item key={item} xs={12} sm={6} md={4}>
+                <FormControlLabel
+                  control={<Checkbox checked name={item.label} onClick={() => addRemoveFilter(item)}/>}
                   label={item.label}
-                  onClick={() => addRemoveFilter(item)}
                 />
-              </ListItem>
-            );
-          })}
-        </List>
+              </Grid>
+            )
+          })
+        }
+      </Grid>
       </>
     );
   }

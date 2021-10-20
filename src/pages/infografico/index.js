@@ -136,6 +136,11 @@ export default function Infograficos() {
       <Grid container spacing={4}>
         {
           iesFilters.map((item) => {
+            if (item.options) {
+              return (
+                <h1>Aqui Renderiza o select</h1>
+              )
+            }
             return (
               <Grid item key={item} xs={12} sm={6} md={4}>
                 <FormControlLabel
@@ -197,7 +202,7 @@ export default function Infograficos() {
           </Grid>
         </Grid>
 
-        <Grid container style={{ padding: 36 }}>
+        {/* <Grid container style={{ padding: 36 }}>
           <Grid item md={3}></Grid>
           <Grid item md={9} container justifyContent="space-between">
 
@@ -220,7 +225,7 @@ export default function Infograficos() {
               Avançar
             </Button>
           </Grid>
-        </Grid>
+        </Grid> */}
         
       </Box>
     </Layout>

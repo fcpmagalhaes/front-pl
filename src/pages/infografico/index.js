@@ -15,6 +15,7 @@ import {
   FormControlLabel,
   Switch
 } from '@material-ui/core';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
@@ -24,50 +25,29 @@ import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import { iesOptions } from '../../mock/filters'
 
 const useStyles = makeStyles((theme) => ({
-  toolbox: {
-    display: 'flex',
-    justifyContent: 'center',
-    width: '100%',
-    maxWidth: 'calc(100vw - 60px)',
-    marginBottom: '10px',
-  },
-  button: {
-    margin: '5px 0px 5px 0px',
-    width: '2em',
-  },
-  wrapper: {
-    display: 'flex',
-    flex: '1 1 auto',
-    overflow: 'hidden',
-    paddingTop: 64,
-    [theme.breakpoints.up('lg')]: {
-      paddingLeft: 256,
-    },
-  },
-  contentContainer: {
-    display: 'flex',
-    flex: '1 1 auto',
-    overflow: 'hidden',
-  },
-  content: {
-    flex: '1 1 auto',
-    height: '100%',
-    overflow: 'auto',
-  },
-  filterMenu: {
-    height: 'calc(100% - 64px)',
-    // backgroundColor: theme.palette.background.default,
-  },
-  listItem: {
+
+  listFilters: {
     paddingTop: 6,
     paddingBottom: 6,
+    
   },
   instructionText: {
     textAlign: 'center',
     padding: '20px',
     marginTop: '20px',
+    marginLeft: '0px',
     border: '2px dotted #074EE8',
-  }
+    width: '100%'
+  },
+  filterButton: {
+    textAlign: 'left',
+    fontSize: '12px',
+  },
+  navigationButton: {
+    paddingLeft: '30px',
+    paddingRight: '30px',
+  },
+
 }));
 
 export default function Infograficos() {
@@ -110,21 +90,21 @@ export default function Infograficos() {
       <>
         <List height="100%" width="100%" display="flex">
           {iesFilters.map((item) => {
-            // if(item.options) {
-            //   return (
-            //     <ListItem
-            //       classes={{ root: classes.listItem }}
-            //       key={item.value}>
+            if(item.options) {
+              return (
+                <ListItem
+                  classes={{ root: classes.listItem }}
+                  key={item.value}>
+                    
   
                   
-            //     </ListItem>
-            //   );
-            // }
+                </ListItem>
+              );
+            }
             return (
               <ListItem
-                classes={{ root: classes.listItem }}
-                key={item.value}>
-
+                key={item.value}
+              >
                 <FormControlLabel 
                   control={<Switch checked/>}
                   label={item.label}
@@ -141,56 +121,74 @@ export default function Infograficos() {
   return (
     <Layout title='Consulta Microdados INEP'>
       <Box mx={4} my={2}>
-        <Grid container>
-            <Grid item md={3} style={{ padding: 20 }}>
-              <Box
-                classes={{ root: classes.filterMenu }}
-              >
-                <List height="100%" width="100%" display="flex">
-                  {iesOptions.map((item) => {
-                    return (
-                      <ListItem
-                        classes={{ root: classes.listItem }}
-                        key={item.value}>
-
-                        <Button
-                          color="primary"
-                          variant={verifyFilterSelected(item) ? "outlined" : "contained"}
-                          onClick={() => addRemoveFilter(item)}
-                        >
-                          {item.label}
-                          {showIcon(item)}
-                        </Button>
-                      </ListItem>
-                    );
-                  })}
-                </List>
-              </Box>
-            </Grid>
+        <Grid container >
+          <Grid item md={3} style={{ padding: 20 }}>
+            <List height="100%" width="100%" display="flex">
+              {iesOptions.map((item) => {
+                return (
+                  <ListItem
+                    classes={{ root: classes.listFilters }}
+                    key={item.value}                        
+                  >
+                    <Button
+                      color="primary"
+                      variant={verifyFilterSelected(item) ? "outlined" : "contained"}
+                      onClick={() => addRemoveFilter(item)}
+                      classes={{ root: classes.filterButton }}
+                    >
+                      {item.label}
+                      {showIcon(item)}
+                    </Button>
+                  </ListItem>
+                );
+              })}
+            </List>
             
-            <Grid item md={1}>
-              <Divider orientation="vertical"/>
-            </Grid>
+          </Grid>
+            
+          <Grid item md={1}>
+            <Divider orientation="vertical"/>
+          </Grid>
 
-            <Grid item md={8} style={{ padding: 20 }}>
-              <h1>Infograficos</h1>
-              {iesFilters.length !== 0 ?
-                refineFilters()
-                :
-                <Box className={classes.instructionText}>
-                  <Typography variant="body2" >
-                    Seus filtros selecionados serão exibidos e refinados aqui.
-                  </Typography>
-
-                </Box>
-
-              }
-
-            </Grid>
-
-
+          <Grid item md={8} style={{ paddingRight: 36 }}>
+            <h1>Infograficos</h1>
+            {iesFilters.length !== 0 ?
+              refineFilters()
+              :
+              <Box className={classes.instructionText}>
+                <Typography variant="body2" >
+                  Seus filtros selecionados serão exibidos e refinados aqui.
+                </Typography>
+              </Box>
+            }
+          </Grid>
         </Grid>
 
+        <Grid container style={{ padding: 36 }}>
+          <Grid item md={3}></Grid>
+          <Grid item md={9} container justifyContent="space-between">
+
+            <Button
+              color="secondary"
+              component="a"
+              variant="contained"
+              // onClick={() => router.push('/infografico')}
+              classes={{ root: classes.navigationButton }}
+            >
+              Voltar
+            </Button>
+            <Button
+              color="secondary"
+              component="a"
+              variant="contained"
+              // onClick={() => router.push('/infografico')}
+              classes={{ root: classes.navigationButton }}
+            >
+              Avançar
+            </Button>
+          </Grid>
+        </Grid>
+        
       </Box>
     </Layout>
   )

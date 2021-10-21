@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -34,15 +36,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function TopBar() {
+function TopBar({setOpenNav, openNav}) {
   const classes = useStyles();
   const session = false;
+
+  const handleDrawer = () => {
+    setOpenNav(!openNav);
+  };
 
   return (
     <AppBar className={classes.root} color="default">
       <Toolbar className={classes.toolbar}>
         <Box display="flex" alignItems="center">
-          <MenuIcon />
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawer}
+          >
+            <MenuIcon />
+          </IconButton>
           <img
             src='/cic-logo.png'
             alt="logo cic"

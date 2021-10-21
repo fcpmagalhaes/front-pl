@@ -25,7 +25,7 @@ export default function Ontologia() {
   return (
     <Layout title='Consulta Microdados INEP'>
       <Box mx={4} my={2}>
-        <h1>Ontologia</h1>
+        <h1>Ontologia do Projeto</h1>
         <TransformWrapper 
           defaultScale={1}
           defaultPositionX={100}

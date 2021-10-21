@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import {
   makeStyles,
@@ -24,7 +24,6 @@ import StorageOutlined from '@material-ui/icons/StorageOutlined';
 import InfoOutlined from '@material-ui/icons/InfoOutlined';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 
-// import { signIn, useSession } from 'next-auth/client';
 
 const useStyles = makeStyles((theme) => ({
   mobileDrawer: {
@@ -63,10 +62,9 @@ const secondaryManu = [
   { id: 4, label: 'Sobre', icon: InfoOutlined },
 ];
 
-function NavBar() {
+function NavBar({openNav}) {
   const classes = useStyles();
   const router = useRouter();
-  // const [session] = useSession();
 
   const isSelected = (item) => router.pathname === item.path;
 
@@ -99,7 +97,7 @@ function NavBar() {
               button
               classes={{ root: classes.listItem }}
               selected={isSelected(item)}
-              onClick={() => router.push(`/${item.path}`)}
+              onClick={() => router.push(item.path)}
             >
               <ListItemIcon>
                 <Icon style={{ color: isSelected(item) && '#074EE8' }} />
@@ -124,7 +122,7 @@ function NavBar() {
               button
               classes={{ root: classes.listItem }}
               selected={isSelected(item)}
-              onClick={() => { router.push(`/${item.path}`) }}
+              onClick={() => router.push(item.path) }
             >
               <ListItemIcon>
                 <Icon style={{ color: isSelected(item) && '#074EE8' }} />
@@ -148,7 +146,7 @@ function NavBar() {
       <Drawer
         anchor="left"
         classes={{ paper: classes.desktopDrawer }}
-        open
+        open={openNav}
         variant="persistent"
       >
         {content}

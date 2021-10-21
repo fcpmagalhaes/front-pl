@@ -1,3 +1,7 @@
+
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core';
 import Head from 'next/head';
 
@@ -21,6 +25,11 @@ const useStyles = makeStyles((theme) => ({
       paddingLeft: 256,
     },
   },
+  noPaddingLeft: {
+    [theme.breakpoints.up('lg')]: {
+      paddingLeft: 0,
+    },
+  },
   contentContainer: {
     display: 'flex',
     flex: '1 1 auto',
@@ -35,6 +44,16 @@ const useStyles = makeStyles((theme) => ({
 
 function Layout({ children, title }) {
   const classes = useStyles();
+  const [openNav, setOpenNav] = useState(true);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if(router.pathname === '/infografico') {
+      setOpenNav(false);
+    }
+  }, [])
+
   return (
     <>
       <Head> 
@@ -43,9 +62,9 @@ function Layout({ children, title }) {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <div className={classes.root}>
-        <TopBar />
-        <NavBar />
-        <div className={classes.wrapper}>
+        <TopBar setOpenNav={setOpenNav} openNav={openNav} />
+        <NavBar openNav={openNav}/>
+        <div className={clsx(classes.wrapper, !openNav && classes.noPaddingLeft)}>
           <div className={classes.contentContainer}>
             <div className={classes.content}>{children}</div>
           </div>

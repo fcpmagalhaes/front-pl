@@ -100,7 +100,7 @@ function NavBar({openNav}) {
               onClick={() => router.push(item.path)}
             >
               <ListItemIcon>
-                <Icon style={{ color: isSelected(item) && '#074EE8' }} />
+                <Icon style={{ color: isSelected(item) && '#1A5FC8' }} />
               </ListItemIcon>
               <ListItemText
                 classes={{
@@ -125,7 +125,7 @@ function NavBar({openNav}) {
               onClick={() => router.push(item.path) }
             >
               <ListItemIcon>
-                <Icon style={{ color: isSelected(item) && '#074EE8' }} />
+                <Icon style={{ color: isSelected(item) && '#1A5FC8' }} />
               </ListItemIcon>
               <ListItemText
                 classes={{

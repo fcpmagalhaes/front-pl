@@ -1,190 +1,124 @@
 import {useState, useEffect} from 'react';
+import IesStep from './IesStep';
+import CollegeStep from './CollegeStep';
+import StudentStep from './StudentStep';
 import Layout from '../../components/Layout';
-import MultipleSelect from '../../components/MultipleSelect';
-import InputValue from '../../components/InputValue';
 import {
-  Box,
-  Grid,
-  List,
-  ListItem,
   Button,
-  Divider,
   Typography,
-  FormControlLabel,
-  Checkbox,
+  Paper,
+  Stepper,
+  Step,
+  StepLabel,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
-
-
-import { iesOptions } from '../../mock/filters'
-
 const useStyles = makeStyles((theme) => ({
-  listFilters: {
-    paddingTop: 6,
-    paddingBottom: 6,
+  appBar: {
+    position: 'relative',
+  },
+  layout: {
+    width: 'auto',
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2),
     
   },
-  instructionText: {
-    textAlign: 'center',
-    padding: '20px',
-    marginTop: '20px',
-    marginLeft: '0px',
-    border: '2px dotted #074EE8',
-    width: '100%'
+  paper: {
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3),
+    padding: theme.spacing(2),
+
   },
-  filterButton: {
-    textAlign: 'left',
-    fontSize: '12px',
+  stepper: {
+    padding: theme.spacing(3, 0, 5),
   },
-  navigationButton: {
+  buttons: {
+    display: 'flex',
+    justifyContent: 'flex-end',
     paddingLeft: '30px',
     paddingRight: '30px',
   },
+  button: {
+    marginTop: theme.spacing(3),
+    marginLeft: theme.spacing(1),
+  },
 }));
 
+const steps = ['Instituição de Ensino', 'Curso', 'Aluno'];
 
-export default function Infograficos() {
+function getStepContent(step) {
+  switch (step) {
+    case 0:
+      return <IesStep />;
+    case 1:
+      return <CollegeStep />;
+    case 2:
+      return <StudentStep />;
+    default:
+      throw new Error('Unknown step');
+  }
+}
+
+
+function Infograficos() {
   const classes = useStyles();
 
-  const [iesFilters, setIesFilters] = useState([]);
-  const [refinedFilters, setRefinedFilters] = useState([]);
+  const [activeStep, setActiveStep] = useState(0);
 
-  function showIcon(item) {
-    if (verifyFilterSelected(item)) {
-      return (<><RemoveCircleOutlineIcon style={{ marginLeft: '10px' }} /></>);
-    }
-    return (<><AddCircleOutlineIcon style={{ marginLeft: '10px' }}/></>);
-  }
+  const handleNext = () => {
+    setActiveStep(activeStep + 1);
+  };
 
-  function addRemoveFilter(item) {
-    const isIncuded = iesFilters.some(filter => filter.value === item.value);
-    if (isIncuded) {
-      const newFilter = iesFilters.filter(e => e.value !== item.value);
-      setIesFilters(newFilter);
-      setRefinedFilters(newFilter);
-    } else {
-      setIesFilters([...iesFilters, item]);
-      if(item.options) {
-        const {options, ...rest} = item;
-        setRefinedFilters([...refinedFilters, rest]);
-      } else {
-        setRefinedFilters([...refinedFilters, item]);
-      }
-    }
-  }
-
-  function verifyFilterSelected(item) {
-    return iesFilters.some(filter => filter.value === item.value);
-  }
-
-  function refineFilters() {
-    return (
-      <Grid container spacing={4}>
-        {
-          iesFilters.map((item) => {
-            if (item.type === 'select') {
-              return (
-                <Grid item xs={12} md={6}>
-                  <MultipleSelect item={item} refinedFilters={refinedFilters} setRefinedFilters={setRefinedFilters}/>
-                </Grid>
-              )
-            } else if (item.type === 'check') {
-              return (
-                <Grid item xs={12} md={6} style={{ pointerEvents: 'none' }}>
-                  <FormControlLabel
-                    control={<Checkbox checked name={item.label} />}
-                    label={item.label}
-                  />
-                </Grid>
-              )
-            } else if (item.type === 'input') {
-              return (
-                <Grid item xs={12} md={6}>
-                  <InputValue item={item} refinedFilters={refinedFilters} setRefinedFilters={setRefinedFilters}/>
-                </Grid>
-              )
-            }
-          })
-        }
-      </Grid>
-    );
-  }
+  const handleBack = () => {
+    setActiveStep(activeStep - 1);
+  };  
 
   return (
     <Layout title='Consulta Microdados INEP'>
-      <Box mx={4} my={2}>
-        <Grid container >
-          <Grid item md={3} style={{ padding: 20 }}>
-            <List height="100%" width="100%" display="flex">
-              {iesOptions.map((item) => {
-                return (
-                  <ListItem
-                    classes={{ root: classes.listFilters }}
-                    key={item.value}                        
-                  >
-                    <Button
-                      color="primary"
-                      variant={verifyFilterSelected(item) ? "outlined" : "contained"}
-                      onClick={() => addRemoveFilter(item)}
-                      classes={{ root: classes.filterButton }}
-                    >
-                      {item.label}
-                      {showIcon(item)}
-                    </Button>
-                  </ListItem>
-                );
-              })}
-            </List>
-          </Grid>
-            
-          <Grid item md={1}>
-            <Divider orientation="vertical"/>
-          </Grid>
-
-          <Grid item md={8} style={{ paddingRight: 36 }}>
-            <h1>Infograficos</h1>
-            {iesFilters.length !== 0 ?
-              refineFilters()
-              :
-              <Box className={classes.instructionText}>
-                <Typography variant="body2" >
-                  Seus filtros selecionados serão exibidos e refinados aqui.
-                </Typography>
-              </Box>
-            }
-          </Grid>
-        </Grid>
-
-        {/* <Grid container style={{ padding: 36 }}>
-          <Grid item md={3}></Grid>
-          <Grid item md={9} container justifyContent="space-between">
-
-            <Button
-              color="secondary"
-              component="a"
-              variant="contained"
-              // onClick={() => router.push('/infografico')}
-              classes={{ root: classes.navigationButton }}
-            >
-              Voltar
-            </Button>
-            <Button
-              color="secondary"
-              component="a"
-              variant="contained"
-              // onClick={() => router.push('/infografico')}
-              classes={{ root: classes.navigationButton }}
-            >
-              Avançar
-            </Button>
-          </Grid>
-        </Grid> */}
-        
-      </Box>
+          <main className={classes.layout}>
+            <Paper className={classes.paper}>
+              <Typography component="h1" variant="h4" align="center">
+                Seleção de Filtros
+              </Typography>
+              <Stepper activeStep={activeStep} className={classes.stepper}>
+                {steps.map((label) => (
+                  <Step key={label}>
+                    <StepLabel>{label}</StepLabel>
+                  </Step>
+                ))}
+              </Stepper>
+              <>
+                {activeStep === steps.length ? (
+                  <>
+                    <Typography variant="h5" gutterBottom>
+                      Aqui vai a exibição do gráfico
+                    </Typography>
+                  </>
+                ) : (
+                  <>
+                    {getStepContent(activeStep)}
+                    <div className={classes.buttons}>
+                      {activeStep !== 0 && (
+                        <Button onClick={handleBack} className={classes.button}>
+                          Voltar
+                        </Button>
+                      )}
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={handleNext}
+                        className={classes.button}
+                      >
+                        {activeStep === steps.length - 1 ? 'Gerar Infográfico' : 'Avançar'}
+                      </Button>
+                    </div>
+                  </>
+                )}
+              </>
+            </Paper>
+          </main>
     </Layout>
   )
 }
+
+export default Infograficos;

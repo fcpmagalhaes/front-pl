@@ -1,33 +1,26 @@
 import {useState, useEffect} from 'react';
 import Layout from '../../components/Layout';
-import { 
-  IconButton,
+import MultipleSelect from '../../components/MultipleSelect';
+import {
   Box,
   Grid,
   List,
   ListItem,
-  ListItemIcon,
-  ListItemText,
   Button,
   Divider,
   Typography,
   FormControlLabel,
-  Switch,
-  FormGroup,
-
   Checkbox,
   Input,
   InputLabel,
-  MenuItem,
-  FormControl,
-  Select,
-  Chip,
 } from '@material-ui/core';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
 
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
+import InputAdornment from '@material-ui/core/InputAdornment';
+
 
 
 import { iesOptions } from '../../mock/filters'
@@ -55,50 +48,15 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: '30px',
     paddingRight: '30px',
   },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-    maxWidth: 300,
-  },
-  chips: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  chip: {
-    margin: 2,
-  },
-
 }));
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
 
-function getStyles(item, theme) {
-  return {
-    fontWeight:
-      verifyFilterSelected(item)
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  };
-}
 
 export default function Infograficos() {
   const classes = useStyles();
-  const theme = useTheme();
 
   const [iesFilters, setIesFilters] = useState([]);
-
-  useEffect(() => {
-    console.log('filtros', iesFilters);
-  }, [iesFilters])
+  const [refinedFilters, setRefinedFilters] = useState([]);
 
   function showIcon(item) {
     if (verifyFilterSelected(item)) {
@@ -110,49 +68,61 @@ export default function Infograficos() {
   function addRemoveFilter(item) {
     const isIncuded = iesFilters.some(filter => filter.value === item.value);
     if (isIncuded) {
-      const newFilter = iesFilters.filter(e => e !== item);
+      const newFilter = iesFilters.filter(e => e.value !== item.value);
       setIesFilters(newFilter);
+      setRefinedFilters(newFilter);
     } else {
       setIesFilters([...iesFilters, item]);
+      if(item.options) {
+        const {options, ...rest} = item;
+        setRefinedFilters([...refinedFilters, rest]);
+      } else {
+        setRefinedFilters([...refinedFilters, item]);
+      }
     }
   }
-
   function verifyFilterSelected(item) {
     return iesFilters.some(filter => filter.value === item.value);
   }
 
-  //verificar!
-  const handleChange = (event) => {
-    console.log('handle', event.target);
-    // setIesFilters([...iesFilters, item]);
-    // setPersonName(event.target.value);
-  };
-
-
   function refineFilters() {
-    console.log('entrei');
     return (
-      <>
       <Grid container spacing={4}>
         {
           iesFilters.map((item) => {
-            if (item.options) {
+            if (item.type === 'select') {
               return (
-                <h1>Aqui Renderiza o select</h1>
+                <Grid item xs={12} md={6}>
+                  <MultipleSelect item={item} refinedFilters={refinedFilters} setRefinedFilters={setRefinedFilters}/>
+                </Grid>
+              )
+            } else if (item.type === 'check') {
+              return (
+                <Grid item xs={12} md={6} style={{ pointerEvents: 'none' }}>
+                  <FormControlLabel
+                    control={<Checkbox checked name={item.label} />}
+                    label={item.label}
+                  />
+                </Grid>
+              )
+            } else if (item.type === 'input') {
+              return (
+                <Grid item xs={12} md={6}>
+                  <InputLabel htmlFor="standard-adornment-amount">{item.label}</InputLabel>
+                  <Input
+                    id="standard-adornment-amount"
+                    value={item.amount}
+                    // onChange={handleChange('amount')}
+                    startAdornment={<InputAdornment position="start">R$</InputAdornment>}
+                    // variant="filled"
+                    type="number"
+                  />
+                </Grid>
               )
             }
-            return (
-              <Grid item key={item} xs={12} sm={6} md={4}>
-                <FormControlLabel
-                  control={<Checkbox checked name={item.label} onClick={() => addRemoveFilter(item)}/>}
-                  label={item.label}
-                />
-              </Grid>
-            )
           })
         }
       </Grid>
-      </>
     );
   }
 
@@ -181,7 +151,6 @@ export default function Infograficos() {
                 );
               })}
             </List>
-            
           </Grid>
             
           <Grid item md={1}>

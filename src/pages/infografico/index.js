@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react';
 import Layout from '../../components/Layout';
 import MultipleSelect from '../../components/MultipleSelect';
+import InputValue from '../../components/InputValue';
 import {
   Box,
   Grid,
@@ -11,22 +12,17 @@ import {
   Typography,
   FormControlLabel,
   Checkbox,
-  Input,
-  InputLabel,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
-import InputAdornment from '@material-ui/core/InputAdornment';
-
 
 
 import { iesOptions } from '../../mock/filters'
 
 const useStyles = makeStyles((theme) => ({
-
   listFilters: {
     paddingTop: 6,
     paddingBottom: 6,
@@ -49,7 +45,6 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: '30px',
   },
 }));
-
 
 
 export default function Infograficos() {
@@ -81,6 +76,7 @@ export default function Infograficos() {
       }
     }
   }
+
   function verifyFilterSelected(item) {
     return iesFilters.some(filter => filter.value === item.value);
   }
@@ -108,15 +104,7 @@ export default function Infograficos() {
             } else if (item.type === 'input') {
               return (
                 <Grid item xs={12} md={6}>
-                  <InputLabel htmlFor="standard-adornment-amount">{item.label}</InputLabel>
-                  <Input
-                    id="standard-adornment-amount"
-                    value={item.amount}
-                    // onChange={handleChange('amount')}
-                    startAdornment={<InputAdornment position="start">R$</InputAdornment>}
-                    // variant="filled"
-                    type="number"
-                  />
+                  <InputValue item={item} refinedFilters={refinedFilters} setRefinedFilters={setRefinedFilters}/>
                 </Grid>
               )
             }

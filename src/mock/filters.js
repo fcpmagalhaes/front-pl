@@ -1,6 +1,6 @@
 export const iesOptions = [
   {
-    value: 1, label: 'Organização Acadêmica',
+    value: 1, label: 'Organização Acadêmica', type: 'select',
     options: [
       { value: 1,	label: "Universidade" },
       { value: 2,	label: "Centro Universitário" },
@@ -10,7 +10,7 @@ export const iesOptions = [
     ]
   },
   {
-    value: 2, label: 'Categoria Administrativa',
+    value: 2, label: 'Categoria Administrativa', type: 'select',
     options: [
       { value: 1, label: "Pública Federal" },
       { value: 2, label: "Pública Estadual" },
@@ -23,13 +23,13 @@ export const iesOptions = [
       { value: 9, label: "Privada confessional" },
     ]
   },
-  {value: 3, label: 'Nome da Instituição',},
-  {value: 4, label: 'teste asdfasfdadsfa',},
-  {value: 5, label: '1231tituição',},
-  {value: 6, label: 'Nomeacasdfad sfadsfstituição',},
-  {value: 7, label: 'Nome da Instituiçãasdfasdfo',},
-  {value: 8, label: 'Nome da Instituasdfas',},
+  {value: 3, label: 'Nome da Instituição', type: 'check'},
+  {value: 4, label: 'teste asdfasfdadsfa', type: 'check'},
+  {value: 5, label: '1231tituição', type: 'check'},
+  {value: 6, label: 'Nomeacasdfad sfadsfstituição', type: 'check'},
+  {value: 7, label: 'Nome da Insasdfo', type: 'check'},
+  {value: 8, label: 'Nome da Instituasdfas', type: 'check'},
+
+  {value: 9, label: 'Valor de alguma coisa', type: 'input'},
 
 ];
-
-

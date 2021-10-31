@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
-import MultipleSelect from '../../components/MultipleSelect';
-import InputValue from '../../components/InputValue';
+import MultipleSelect from '../../../components/MultipleSelect';
+import InputValue from '../../../components/InputValue';
 import {
   Box,
   Grid,
@@ -19,7 +19,7 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 
 
-import { iesOptions } from '../../mock/filters'
+import { iesOptions } from '../../../mock/filters'
 
 const useStyles = makeStyles((theme) => ({
   listFilters: {

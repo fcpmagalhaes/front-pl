@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
-import MultipleSelect from '../../components/MultipleSelect';
-import InputValue from '../../components/InputValue';
+import MultipleSelect from '../../../components/MultipleSelect';
+import InputValue from '../../../components/InputValue';
 import {
   Box,
   Grid,
@@ -19,7 +19,7 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 
 
-import { iesOptions } from '../../mock/filters'
+import { iesOptions } from '../../../mock/filters'
 
 const useStyles = makeStyles((theme) => ({
   listFilters: {
@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function StudentStep() {
+function CollegeStep() {
   const classes = useStyles();
 
   const [iesFilters, setIesFilters] = useState([]);
@@ -144,7 +144,7 @@ function StudentStep() {
 
       <Grid item md={8} style={{ paddingRight: 36 }}>
         <Typography variant="h6" gutterBottom>
-          Aluno
+          Curso
         </Typography>
         {iesFilters.length !== 0 ?
           refineFilters()
@@ -160,4 +160,4 @@ function StudentStep() {
   )
 }
 
-export default StudentStep;
+export default CollegeStep;

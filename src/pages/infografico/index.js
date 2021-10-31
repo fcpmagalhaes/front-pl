@@ -1,7 +1,10 @@
 import {useState, useEffect} from 'react';
-import IesStep from './IesStep';
-import CollegeStep from './CollegeStep';
-import StudentStep from './StudentStep';
+import YearStep from './steps/YearStep';
+import IesStep from './steps/IesStep';
+import CollegeStep from './steps/CollegeStep';
+import StudentStep from './steps/StudentStep';
+import ChartSelectStep from './steps/ChartSelectStep';
+import ChartExibition from './ChartExibition';
 import Layout from '../../components/Layout';
 import {
   Button,
@@ -14,9 +17,6 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  appBar: {
-    position: 'relative',
-  },
   layout: {
     width: 'auto',
     marginLeft: theme.spacing(2),
@@ -44,16 +44,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const steps = ['Instituição de Ensino', 'Curso', 'Aluno'];
+const steps = ['Período da Pesquisa','Instituição de Ensino', 'Curso', 'Aluno', 'Gráfico'];
 
 function getStepContent(step) {
   switch (step) {
-    case 0:
-      return <IesStep />;
+    case 0: 
+      return <YearStep />
     case 1:
-      return <CollegeStep />;
+      return <IesStep />;
     case 2:
+      return <CollegeStep />;
+    case 3:
       return <StudentStep />;
+    case 4:
+      return <ChartSelectStep />;
     default:
       throw new Error('Unknown step');
   }
@@ -89,11 +93,7 @@ function Infograficos() {
               </Stepper>
               <>
                 {activeStep === steps.length ? (
-                  <>
-                    <Typography variant="h5" gutterBottom>
-                      Aqui vai a exibição do gráfico
-                    </Typography>
-                  </>
+                  <ChartExibition />
                 ) : (
                   <>
                     {getStepContent(activeStep)}

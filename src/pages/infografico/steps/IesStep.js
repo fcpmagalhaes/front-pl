@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import MultipleSelect from '../../../components/MultipleSelect';
 import InputValue from '../../../components/InputValue';
 import {
@@ -19,7 +19,11 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 
 
-import { iesOptions } from '../../../mock/filters'
+import { iesOptions } from '../../../mock/filters';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { Creators } from '../../../store/infographic/actions';
+
 
 const useStyles = makeStyles((theme) => ({
   listFilters: {
@@ -48,6 +52,18 @@ const useStyles = makeStyles((theme) => ({
 
 function IesStep() {
   const classes = useStyles();
+
+  const { data, loading } = useSelector((state) => {
+    return state.infographic;
+  });
+
+  const dispatch = useDispatch();
+
+  const years = ["2018"];
+
+  useEffect(() => {
+    dispatch(Creators.loadIes({years}));
+  }, []);
 
   const [iesFilters, setIesFilters] = useState([]);
   const [refinedFilters, setRefinedFilters] = useState([]);

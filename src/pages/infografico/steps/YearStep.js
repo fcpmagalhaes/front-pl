@@ -79,7 +79,7 @@ export default function YearStep() {
             return (
               <Button
                 variant="contained"
-                color="secondary"
+                color="primary"
                 variant={verifyYearSelected(year) ? "outlined" : "contained"}
                 onClick={() => addRemoveYear(year)}
                 disabled={verifyAllSelected()}
@@ -92,7 +92,7 @@ export default function YearStep() {
           }
           <Button
                 variant="contained"
-                color="secondary"
+                color="primary"
                 variant={verifyAllSelected() ? "outlined" : "contained"}
                 onClick={() => addRemoveYear('all')}
                 className={classes.button}

@@ -13,17 +13,11 @@ import {
   Checkbox,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-
-
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
-
-
-import { iesOptions } from '../../../mock/filters';
-
+import { iesOptionsMock } from '../../../mock/filters';
 import { useSelector, useDispatch } from 'react-redux';
 import { Creators } from '../../../store/infographic/actions';
-
 
 const useStyles = makeStyles((theme) => ({
   listFilters: {
@@ -49,21 +43,31 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 function IesStep() {
   const classes = useStyles();
 
-  const { data, loading } = useSelector((state) => {
+  const { rangeYears, iesNames, loading } = useSelector((state) => {
     return state.infographic;
   });
 
   const dispatch = useDispatch();
 
-  const years = ["2018"];
+  useEffect(() => {
+    dispatch(Creators.loadIes(rangeYears));
+  }, []);
+
+  const [iesNamesOptions, setIesNamesOptions] = useState([])
 
   useEffect(() => {
-    dispatch(Creators.loadIes({years}));
-  }, []);
+    if (iesNames.length !== 0) {
+      setIesNamesOptions([
+        {
+          value: 3, label: 'Nome da Instituição', type: 'select',
+          options: iesNames
+        }
+      ])
+    }
+  }, [iesNames]);
 
   const [iesFilters, setIesFilters] = useState([]);
   const [refinedFilters, setRefinedFilters] = useState([]);
@@ -129,26 +133,37 @@ function IesStep() {
     );
   }
 
+  function listButtons(item) {
+    return (
+      <ListItem
+        classes={{ root: classes.listFilters }}
+        key={item.value}                        
+      >
+        <Button
+          color="primary"
+          variant={verifyFilterSelected(item) ? "outlined" : "contained"}
+          onClick={() => addRemoveFilter(item)}
+          classes={{ root: classes.filterButton }}
+        >
+          {item.label}
+          {showIcon(item)}
+        </Button>
+      </ListItem>
+    )
+  }
+
   return (
     <Grid container>
       <Grid item md={3} style={{ padding: 20 }}>
         <List height="100%" width="100%" display="flex">
-          {iesOptions.map((item) => {
+          {iesOptionsMock.map((item) => {
             return (
-              <ListItem
-                classes={{ root: classes.listFilters }}
-                key={item.value}                        
-              >
-                <Button
-                  color="primary"
-                  variant={verifyFilterSelected(item) ? "outlined" : "contained"}
-                  onClick={() => addRemoveFilter(item)}
-                  classes={{ root: classes.filterButton }}
-                >
-                  {item.label}
-                  {showIcon(item)}
-                </Button>
-              </ListItem>
+              listButtons(item)
+            );
+          })}
+          {iesNamesOptions.map((item) => {
+            return (
+              listButtons(item)
             );
           })}
         </List>

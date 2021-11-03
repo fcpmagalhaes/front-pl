@@ -13,13 +13,11 @@ import {
   Checkbox,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-
-
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
-
-
-import { iesOptions } from '../../../mock/filters'
+import { collegeOptionsMock } from '../../../mock/filters';
+import { useSelector, useDispatch } from 'react-redux';
+import { Creators } from '../../../store/infographic/actions';
 
 const useStyles = makeStyles((theme) => ({
   listFilters: {
@@ -48,9 +46,36 @@ const useStyles = makeStyles((theme) => ({
 
 function CollegeStep() {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
-  const [iesFilters, setIesFilters] = useState([]);
+  const { rangeYears, collegeNames, loading } = useSelector((state) => {
+    return state.infographic;
+  });
+
+  const [collegeFilters, setCollegeFilters] = useState([]);
   const [refinedFilters, setRefinedFilters] = useState([]);
+  const [collegeNamesOptions, setCollegeNamesOptions] = useState([]);
+
+  useEffect(() => {
+    dispatch(Creators.loadCollege(rangeYears));
+  }, []);
+
+  useEffect(() => {
+    if (collegeNames.length !== 0) {
+      setCollegeNamesOptions([
+        {
+          value: 1, label: 'Nome do Curso', type: 'select',
+          options: collegeNames
+        }
+      ])
+    }
+  }, [collegeNames]);
+
+  useEffect(() => {
+    if (refinedFilters.length !== 0) {
+      dispatch(Creators.setCollegeFilters(refinedFilters));
+    }
+  }, [refinedFilters]);
 
   function showIcon(item) {
     if (verifyFilterSelected(item)) {
@@ -60,13 +85,13 @@ function CollegeStep() {
   }
 
   function addRemoveFilter(item) {
-    const isIncuded = iesFilters.some(filter => filter.value === item.value);
+    const isIncuded = collegeFilters.some(filter => filter.value === item.value);
     if (isIncuded) {
-      const newFilter = iesFilters.filter(e => e.value !== item.value);
-      setIesFilters(newFilter);
+      const newFilter = collegeFilters.filter(e => e.value !== item.value);
+      setCollegeFilters(newFilter);
       setRefinedFilters(newFilter);
     } else {
-      setIesFilters([...iesFilters, item]);
+      setCollegeFilters([...collegeFilters, item]);
       if(item.options) {
         const {options, ...rest} = item;
         setRefinedFilters([...refinedFilters, rest]);
@@ -77,14 +102,14 @@ function CollegeStep() {
   }
 
   function verifyFilterSelected(item) {
-    return iesFilters.some(filter => filter.value === item.value);
+    return collegeFilters.some(filter => filter.value === item.value);
   }
 
   function refineFilters() {
     return (
       <Grid container spacing={4}>
         {
-          iesFilters.map((item) => {
+          collegeFilters.map((item) => {
             if (item.type === 'select') {
               return (
                 <Grid item xs={12} md={6}>
@@ -113,26 +138,37 @@ function CollegeStep() {
     );
   }
 
+  function listButtons(item) {
+    return (
+      <ListItem
+        classes={{ root: classes.listFilters }}
+        key={item.value}                        
+      >
+        <Button
+          color="primary"
+          variant={verifyFilterSelected(item) ? "outlined" : "contained"}
+          onClick={() => addRemoveFilter(item)}
+          classes={{ root: classes.filterButton }}
+        >
+          {item.label}
+          {showIcon(item)}
+        </Button>
+      </ListItem>
+    )
+  }
+
   return (
     <Grid container>
       <Grid item md={3} style={{ padding: 20 }}>
         <List height="100%" width="100%" display="flex">
-          {iesOptions.map((item) => {
+          {collegeOptionsMock.map((item) => {
             return (
-              <ListItem
-                classes={{ root: classes.listFilters }}
-                key={item.value}                        
-              >
-                <Button
-                  color="primary"
-                  variant={verifyFilterSelected(item) ? "outlined" : "contained"}
-                  onClick={() => addRemoveFilter(item)}
-                  classes={{ root: classes.filterButton }}
-                >
-                  {item.label}
-                  {showIcon(item)}
-                </Button>
-              </ListItem>
+              listButtons(item)
+            );
+          })}
+          {collegeNamesOptions.map((item) => {
+            return (
+              listButtons(item)
             );
           })}
         </List>
@@ -146,12 +182,15 @@ function CollegeStep() {
         <Typography variant="h6" gutterBottom>
           Curso
         </Typography>
-        {iesFilters.length !== 0 ?
+        {collegeFilters.length !== 0 ?
           refineFilters()
           :
           <Box className={classes.instructionText}>
             <Typography variant="subtitle2" >
               Seus filtros selecionados serão exibidos e refinados aqui.
+            </Typography>
+            <Typography variant="subtitle1" >
+              Caso nenhuma opção seja selecionada, os filtros referentes aos Cursos serão desconsiderados.
             </Typography>
           </Box>
         }

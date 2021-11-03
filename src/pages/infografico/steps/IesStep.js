@@ -52,11 +52,13 @@ function IesStep() {
 
   const dispatch = useDispatch();
 
+  const [iesNamesOptions, setIesNamesOptions] = useState([]);
+  const [iesFilters, setIesFilters] = useState([]);
+  const [refinedFilters, setRefinedFilters] = useState([]);
+
   useEffect(() => {
     dispatch(Creators.loadIes(rangeYears));
   }, []);
-
-  const [iesNamesOptions, setIesNamesOptions] = useState([])
 
   useEffect(() => {
     if (iesNames.length !== 0) {
@@ -69,8 +71,13 @@ function IesStep() {
     }
   }, [iesNames]);
 
-  const [iesFilters, setIesFilters] = useState([]);
-  const [refinedFilters, setRefinedFilters] = useState([]);
+  useEffect(() => {
+    if (refinedFilters.length !== 0) {
+      dispatch(Creators.setIesFilters(refinedFilters));
+    }
+  }, [refinedFilters]);
+
+
 
   function showIcon(item) {
     if (verifyFilterSelected(item)) {
@@ -183,6 +190,9 @@ function IesStep() {
           <Box className={classes.instructionText}>
             <Typography variant="subtitle2" >
               Seus filtros selecionados serão exibidos e refinados aqui.
+            </Typography>
+            <Typography variant="subtitle1" >
+              Caso nenhuma opção seja selecionada, os filtros referentes as Instituições de Ensino serão desconsiderados.
             </Typography>
           </Box>
         }

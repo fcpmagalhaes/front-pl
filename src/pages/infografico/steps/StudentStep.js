@@ -13,13 +13,11 @@ import {
   Checkbox,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-
-
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
-
-
-import { iesOptions } from '../../../mock/filters'
+import { studentOptionsMock } from '../../../mock/filters'
+import { useSelector, useDispatch } from 'react-redux';
+import { Creators } from '../../../store/infographic/actions';
 
 const useStyles = makeStyles((theme) => ({
   listFilters: {
@@ -45,12 +43,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 function StudentStep() {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
-  const [iesFilters, setIesFilters] = useState([]);
+  const [studentFilters, setStudentFilters] = useState([]);
   const [refinedFilters, setRefinedFilters] = useState([]);
+
+  useEffect(() => {
+    if (refinedFilters.length !== 0) {
+      dispatch(Creators.setStudentFilters(refinedFilters));
+    }
+  }, [refinedFilters]);
 
   function showIcon(item) {
     if (verifyFilterSelected(item)) {
@@ -60,13 +64,13 @@ function StudentStep() {
   }
 
   function addRemoveFilter(item) {
-    const isIncuded = iesFilters.some(filter => filter.value === item.value);
+    const isIncuded = studentFilters.some(filter => filter.value === item.value);
     if (isIncuded) {
-      const newFilter = iesFilters.filter(e => e.value !== item.value);
-      setIesFilters(newFilter);
+      const newFilter = studentFilters.filter(e => e.value !== item.value);
+      setStudentFilters(newFilter);
       setRefinedFilters(newFilter);
     } else {
-      setIesFilters([...iesFilters, item]);
+      setStudentFilters([...studentFilters, item]);
       if(item.options) {
         const {options, ...rest} = item;
         setRefinedFilters([...refinedFilters, rest]);
@@ -77,14 +81,14 @@ function StudentStep() {
   }
 
   function verifyFilterSelected(item) {
-    return iesFilters.some(filter => filter.value === item.value);
+    return studentFilters.some(filter => filter.value === item.value);
   }
 
   function refineFilters() {
     return (
       <Grid container spacing={4}>
         {
-          iesFilters.map((item) => {
+          studentFilters.map((item) => {
             if (item.type === 'select') {
               return (
                 <Grid item xs={12} md={6}>
@@ -117,7 +121,7 @@ function StudentStep() {
     <Grid container>
       <Grid item md={3} style={{ padding: 20 }}>
         <List height="100%" width="100%" display="flex">
-          {iesOptions.map((item) => {
+          {studentOptionsMock.map((item) => {
             return (
               <ListItem
                 classes={{ root: classes.listFilters }}
@@ -146,12 +150,15 @@ function StudentStep() {
         <Typography variant="h6" gutterBottom>
           Aluno
         </Typography>
-        {iesFilters.length !== 0 ?
+        {studentFilters.length !== 0 ?
           refineFilters()
           :
           <Box className={classes.instructionText}>
             <Typography variant="subtitle2" >
               Seus filtros selecionados serão exibidos e refinados aqui.
+            </Typography>
+            <Typography variant="subtitle1" >
+              Caso nenhuma opção seja selecionada, os filtros referentes aos Alunos serão desconsiderados.
             </Typography>
           </Box>
         }

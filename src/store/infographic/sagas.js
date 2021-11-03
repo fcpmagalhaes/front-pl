@@ -1,53 +1,12 @@
 import { takeLatest, put, call } from 'redux-saga/effects';
-
+import _ from 'lodash';
 import { api } from '../../services/axios/index';
-
 import { Types } from './actions';
 
 
-// async function apiGet(values) {
-//   const page = values.paginationParams.offset;
-//   const { size } = values.paginationParams;
-//   const search = values.filterParams.filterByText;
-//   let status = values.filterParams.filterByStatus;
-
-//   if (status === 'all') {
-//     status = null;
-//   }
-//   return api.get('/dpr/reports', {
-//     params: {
-//       page,
-//       size,
-//       search,
-//       status,
-//     },
-//   });
-// }
-
-// function* loadReport(values) {
-//   try {
-//     const {
-//       data,
-//       headers: { 'all-rows-total-count': count },
-//     } = yield call(apiGet, values);
-//     const reportList = yield formatReportData(data);
-//     yield put({
-//       type: Types.LOAD_COMPLETE,
-//       payload: {
-//         data: reportList,
-//         loading: false,
-//         totalReports: parseInt(count, 10),
-//       },
-//     });
-//   } catch (err) {
-//     yield put({ type: Types.LOAD_ERROR });
-//   }
-// }
-
 async function getIesByYears(values) {
-  const { years } = values;
   const payload = {
-    range: years,
+    range: values,
   };
 
   return api.post('/ies_names', {
@@ -55,16 +14,40 @@ async function getIesByYears(values) {
   });
 }
 
+function standardizeKeyValue(arrayObject) {
+  const renamed = [];
+  arrayObject.map( item => {
+    renamed.push(
+      _.mapKeys( item, ( value, key ) => {
+          let newKey = key;
+          if( key === 'co_ies' ) {
+              newKey = 'value';
+          }
+
+          if( key === 'no_ies' ) {
+              newKey = 'label';
+          }
+          return newKey;
+      })
+    )
+  });
+  return renamed;
+};
+
 function* loadIes(values) {
   try {
     const response = yield call(getIesByYears, values.payload);
-    console.log('Universidades', response);
+    yield put({
+      type: Types.SET_IES_NAMES,
+      payload: {
+        iesNames: standardizeKeyValue(response.data),
+      },
+    });
   } catch (err) {
-    console.log(err);
+    yield put({ type: Types.LOAD_ERROR });
   }
 }
 
 export function* infographicSagas() {
-  // yield takeLatest(Types.LOAD, loadReport);
   yield takeLatest(Types.LOAD_IES, loadIes);
 }

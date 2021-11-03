@@ -30,7 +30,7 @@ const InputValue = ({ item, refinedFilters, setRefinedFilters  }) => {
         id="standard-adornment-amount"
         value={amount}
         onChange={handleChange}
-        startAdornment={<InputAdornment position="start">R$</InputAdornment>}
+        // startAdornment={<InputAdornment position="start">R$</InputAdornment>}
         type="number"
       />
     </>

@@ -2,6 +2,8 @@ import {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Typography, Grid, Box } from '@material-ui/core';
 import _ from 'lodash';
+import { useSelector, useDispatch } from 'react-redux';
+import { Creators } from '../../../store/infographic/actions';
 
 const useStyles = makeStyles((theme) => ({
   buttons: {
@@ -24,40 +26,39 @@ const useStyles = makeStyles((theme) => ({
 export default function YearStep() {
   const classes = useStyles();
   
-  const yearsLabel = [2015, 2016, 2017, 2018, 2019];
+  // const yearsLabel = [2015, 2016, 2017, 2018, 2019];
+  const yearsLabel = [2018, 2019];
 
-  const [years, setYears] = useState([]);
+  const { rangeYears, loading } = useSelector((state) => {
+    return state.infographic;
+  });
 
-  useEffect(() => {
-    console.log(years);
-    console.log(typeof yearsLabel);
-    
-  }, [years])
+  const dispatch = useDispatch();
   
   function verifyYearSelected(item) {
-    return years.some(filter => filter === item);
+    return rangeYears.some(filter => filter === item);
   }
 
   function addRemoveYear(item) {
     if(item === 'all') {
       if (verifyAllSelected()) {
-        setYears([]);
+        dispatch(Creators.setRangeYears([]));
       } else {
-        setYears(yearsLabel);
+        dispatch(Creators.setRangeYears(yearsLabel));
       }
     } else {
-      const isIncuded = years.some(filter => filter === item);
+      const isIncuded = rangeYears.some(filter => filter === item);
       if (isIncuded) {
-        const newYears = years.filter(e => e !== item);
-        setYears(newYears);
+        const newYears = rangeYears.filter(e => e !== item);
+        dispatch(Creators.setRangeYears(newYears));
       } else {
-        setYears([...years, item]);
+        dispatch(Creators.setRangeYears([...rangeYears, item]));
       }
     }
   }
 
   function verifyAllSelected() {
-    return _.isEqual(years.sort(), yearsLabel.sort());
+    return _.isEqual(rangeYears.sort(), yearsLabel.sort());
   };
 
   return (
@@ -67,7 +68,7 @@ export default function YearStep() {
           Anos de filtro de pesquisa
         </Typography>
         <div className={classes.buttons}>
-          { !years.length ?
+          { !rangeYears.length ?
             <Box className={classes.instructionText}>
               <Typography variant="subtitle2" >
                 Selecione os anos a serem consultados para comparação no infográfico.

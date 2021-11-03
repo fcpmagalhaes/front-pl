@@ -69,15 +69,23 @@ function getStepContent(step) {
 function Infograficos() {
   const classes = useStyles();
 
-  const { activeStep, loading } = useSelector((state) => {
+  const { activeStep, loading, rangeYears, iesFilters, collegeFilters, studentFilters } = useSelector((state) => {
     return state.infographic;
   });
   
   const dispatch = useDispatch();
   
   useEffect(() => {
-    
-  }, []);
+    if(activeStep === 4) {
+      const filters = {
+        rangeYears,
+        iesFilters,
+        collegeFilters,
+        studentFilters,
+      }
+      dispatch(Creators.loadResearch(filters));
+    };
+  }, [activeStep]);
 
   const handleNext = () => {
     dispatch(Creators.updateStep(activeStep + 1));

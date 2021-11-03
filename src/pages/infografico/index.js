@@ -15,6 +15,8 @@ import {
   StepLabel,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { useSelector, useDispatch } from 'react-redux';
+import { Creators } from '../../store/infographic/actions';
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -44,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 const steps = ['Período da Pesquisa','Instituição de Ensino', 'Curso', 'Aluno', 'Gráfico'];
 
 function getStepContent(step) {
@@ -63,19 +66,26 @@ function getStepContent(step) {
   }
 }
 
-
 function Infograficos() {
   const classes = useStyles();
 
-  const [activeStep, setActiveStep] = useState(0);
+  const { activeStep, loading } = useSelector((state) => {
+    return state.infographic;
+  });
+  
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    
+  }, []);
 
   const handleNext = () => {
-    setActiveStep(activeStep + 1);
+    dispatch(Creators.updateStep(activeStep + 1));
   };
 
   const handleBack = () => {
-    setActiveStep(activeStep - 1);
-  };  
+    dispatch(Creators.updateStep(activeStep - 1));
+  };
 
   return (
     <Layout title='Consulta Microdados INEP'>

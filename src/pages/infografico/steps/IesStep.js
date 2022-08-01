@@ -140,11 +140,11 @@ function IesStep() {
     );
   }
 
-  function listButtons(item) {
+  function listButtons(item, index) {
     return (
       <ListItem
         classes={{ root: classes.listFilters }}
-        key={item.value}                        
+        key={index}                        
       >
         <Button
           color="primary"
@@ -163,14 +163,14 @@ function IesStep() {
     <Grid container>
       <Grid item md={3} style={{ padding: 20 }}>
         <List height="100%" width="100%" display="flex">
-          {iesOptionsMock.map((item) => {
+          {iesOptionsMock.map((item, index) => {
             return (
-              listButtons(item)
+              listButtons(item, index)
             );
           })}
-          {iesNamesOptions.map((item) => {
+          {iesNamesOptions.map((item, index) => {
             return (
-              listButtons(item)
+              listButtons(item, index)
             );
           })}
         </List>

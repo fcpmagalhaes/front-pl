@@ -38,7 +38,7 @@ export default function YearStep() {
   function verifyYearSelected(item) {
     return rangeYears.some(filter => filter === item);
   }
-
+  
   function addRemoveYear(item) {
     if(item === 'all') {
       if (verifyAllSelected()) {
@@ -47,8 +47,7 @@ export default function YearStep() {
         dispatch(Creators.setRangeYears(yearsLabel));
       }
     } else {
-      const isIncuded = rangeYears.some(filter => filter === item);
-      if (isIncuded) {
+      if (verifyYearSelected(item)) {
         const newYears = rangeYears.filter(e => e !== item);
         dispatch(Creators.setRangeYears(newYears));
       } else {
@@ -76,10 +75,10 @@ export default function YearStep() {
             </Box> 
             : '' 
           }
-          {yearsLabel.map((year) => {
+          {yearsLabel.map((year, index) => {
             return (
               <Button
-                variant="contained"
+                key={index}
                 color="primary"
                 variant={verifyYearSelected(year) ? "outlined" : "contained"}
                 onClick={() => addRemoveYear(year)}
@@ -92,7 +91,6 @@ export default function YearStep() {
           })
           }
           <Button
-                variant="contained"
                 color="primary"
                 variant={verifyAllSelected() ? "outlined" : "contained"}
                 onClick={() => addRemoveYear('all')}

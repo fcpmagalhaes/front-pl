@@ -109,16 +109,16 @@ function CollegeStep() {
     return (
       <Grid container spacing={4}>
         {
-          collegeFilters.map((item) => {
+          collegeFilters.map((item, index) => {
             if (item.type === 'select') {
               return (
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={6} key={index}>
                   <MultipleSelect item={item} refinedFilters={refinedFilters} setRefinedFilters={setRefinedFilters}/>
                 </Grid>
               )
             } else if (item.type === 'check') {
               return (
-                <Grid item xs={12} md={6} style={{ pointerEvents: 'none' }}>
+                <Grid item xs={12} md={6} style={{ pointerEvents: 'none' }} key={index}>
                   <FormControlLabel
                     control={<Checkbox checked name={item.label} />}
                     label={item.label}
@@ -127,7 +127,7 @@ function CollegeStep() {
               )
             } else if (item.type === 'input') {
               return (
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={6} key={index}>
                   <InputValue item={item} refinedFilters={refinedFilters} setRefinedFilters={setRefinedFilters}/>
                 </Grid>
               )

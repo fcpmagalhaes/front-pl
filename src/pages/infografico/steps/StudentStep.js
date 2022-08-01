@@ -88,16 +88,16 @@ function StudentStep() {
     return (
       <Grid container spacing={4}>
         {
-          studentFilters.map((item) => {
+          studentFilters.map((item, index) => {
             if (item.type === 'select') {
               return (
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={6} key={index}>
                   <MultipleSelect item={item} refinedFilters={refinedFilters} setRefinedFilters={setRefinedFilters}/>
                 </Grid>
               )
             } else if (item.type === 'check') {
               return (
-                <Grid item xs={12} md={6} style={{ pointerEvents: 'none' }}>
+                <Grid item xs={12} md={6} style={{ pointerEvents: 'none' }} key={index}>
                   <FormControlLabel
                     control={<Checkbox checked name={item.label} />}
                     label={item.label}
@@ -106,7 +106,7 @@ function StudentStep() {
               )
             } else if (item.type === 'input') {
               return (
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={6} key={index}>
                   <InputValue item={item} refinedFilters={refinedFilters} setRefinedFilters={setRefinedFilters}/>
                 </Grid>
               )
@@ -121,11 +121,11 @@ function StudentStep() {
     <Grid container>
       <Grid item md={3} style={{ padding: 20 }}>
         <List height="100%" width="100%" display="flex">
-          {studentOptionsMock.map((item) => {
+          {studentOptionsMock.map((item, index) => {
             return (
               <ListItem
                 classes={{ root: classes.listFilters }}
-                key={item.value}                        
+                key={index}                        
               >
                 <Button
                   color="primary"

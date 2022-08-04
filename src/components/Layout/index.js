@@ -7,6 +7,7 @@ import Head from 'next/head';
 
 import TopBar from './TopBar';
 import NavBar from './NavBar';
+import Modal from '../Modal';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -64,6 +65,7 @@ function Layout({ children, title }) {
       <div className={classes.root}>
         <TopBar setOpenNav={setOpenNav} openNav={openNav} />
         <NavBar openNav={openNav}/>
+        <Modal />
         <div className={clsx(classes.wrapper, !openNav && classes.noPaddingLeft)}>
           <div className={classes.contentContainer}>
             <div className={classes.content}>{children}</div>

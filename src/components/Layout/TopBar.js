@@ -1,4 +1,8 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { Creators } from '../../store/infographic/actions';
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -11,6 +15,7 @@ import Avatar from '@material-ui/core/Avatar';
 import MenuIcon from '@material-ui/icons/Menu';
 import VideoCall from '@material-ui/icons/VideoCall';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import AccountTreeOutlined from '@material-ui/icons/AccountTreeOutlined';
 import Apps from '@material-ui/icons/Apps';
 import MoreVert from '@material-ui/icons/MoreVert';
 
@@ -39,10 +44,23 @@ const useStyles = makeStyles((theme) => ({
 function TopBar({setOpenNav, openNav}) {
   const classes = useStyles();
   const session = false;
+  const router = useRouter();
+
+  const { openModal, loading } = useSelector((state) => {
+    return state.infographic;
+  });
+
+  const dispatch = useDispatch();
+
 
   const handleDrawer = () => {
     setOpenNav(!openNav);
   };
+
+  const handleClickOpen = () => {
+    dispatch(Creators.setModal({openModal: !openModal}));
+  };
+
 
   return (
     <AppBar className={classes.root} color="default">
@@ -64,9 +82,14 @@ function TopBar({setOpenNav, openNav}) {
         </Box>
         
         <Box display="flex">
-          <IconButton className={classes.icons}>
-            <Apps />
-          </IconButton>
+          <Button
+            component="button"
+            variant="outlined"
+            startIcon={<AccountTreeOutlined />}
+            onClick={handleClickOpen}
+          >
+            Ontologia
+          </Button>
           <IconButton className={classes.icons}>
             <MoreVert />
           </IconButton>

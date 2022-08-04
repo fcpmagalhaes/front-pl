@@ -5,6 +5,7 @@ const INITIAL_STATE = {
   success: false,
   error: false,
   activeStep: 0,
+  openModal: false,
   rangeYears: [],
   iesNames: [],
   iesFilters: [],
@@ -17,7 +18,7 @@ const INITIAL_STATE = {
 // Reducer
 export default function infographic(state = INITIAL_STATE, action) {
   // console.log('payload', action.payload);
-  // console.log('state', state);
+  console.log('state', state);
   switch (action.type) {
     case Types.UPDATE_STEP:
       return {
@@ -84,14 +85,16 @@ export default function infographic(state = INITIAL_STATE, action) {
         researchData: action.payload.researchData
       };
 
-
-
-
     case Types.LOAD_ERROR:
       return {
         ...state,
         error: true,
         loading: false,
+      };
+    case Types.SET_MODAL:
+      return {
+        ...state,
+        openModal: action.payload.openModal
       };
 
     default:

@@ -13,6 +13,7 @@ export const Types = {
   SET_RESEARCH: 'infographic/SET_RESEARCH',
 
   UPDATE_STEP: 'infographic/UPDATE_STEP',
+  SET_MODAL: 'infographic/SET_MODAL'
 };
 
 // Action Creators
@@ -48,6 +49,10 @@ export const Creators = {
   loadResearch: (filters) => ({
     type: Types.LOAD_RESEARCH,
     payload: filters,
+  }),
+  setModal: (openModal) => ({
+    type: Types.SET_MODAL,
+    payload: openModal,
   }),
 
 };

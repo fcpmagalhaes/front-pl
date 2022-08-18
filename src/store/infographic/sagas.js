@@ -99,7 +99,7 @@ function* loadCollege(values) {
     yield put({
       type: Types.SET_COLLEGE_NAMES,
       payload: {
-        collegeNames: standardizeKeyValue(responseNames.data, 'co_curso', 'no_curso'),
+        collegeNames: responseNames.data,
       },
     });
 
@@ -108,7 +108,6 @@ function* loadCollege(values) {
       payload: {
         collegeOptions: responseFilters.data,
       },
-      
     });
   } catch (err) {
     yield put({ type: Types.LOAD_ERROR });

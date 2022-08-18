@@ -5,10 +5,15 @@ export const Types = {
   LOAD_RESEARCH: 'infographic/LOAD_RESEARCH',
 
   SET_RANGE_YEARS: 'infographic/SET_RANGE_YEARS',
+  
   SET_IES_NAMES: 'infographic/SET_IES_NAMES',
+  SET_IES_OPTIONS: 'infographic/SET_IES_OPTIONS',
   SET_IES_FILTERS: 'infographic/SET_IES_FILTERS',
+  
   SET_COLLEGE_NAMES: 'infographic/SET_COLLEGE_NAMES',
+  SET_COLLEGE_OPTIONS: 'infographic/SET_COLLEGE_OPTIONS',
   SET_COLLEGE_FILTERS: 'infographic/SET_COLLEGE_FILTERS',
+  
   SET_STUDENT_FILTERS: 'infographic/SET_STUDENT_FILTERS',
   SET_RESEARCH: 'infographic/SET_RESEARCH',
 

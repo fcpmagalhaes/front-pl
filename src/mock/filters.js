@@ -90,38 +90,3 @@ export const studentOptionsMock = [
     ]
   },
 ];
-
-export const collegeOptionsMock = [
-  {
-    value: 2, label: 'Grau Acadêmico', type: 'select',
-    options: [
-      { value: 1,	label: "Bacharelado" },
-      { value: 2,	label: "Licenciatura" },
-      { value: 3,	label: "Tecnológico" },
-      { value: 4,	label: "Bacharelado e Licenciatura" },
-    ]
-  },
-  {
-    value: 3, label: 'Turno', type: 'select',
-    options: [
-      { value: 1, label: "Matutino" },
-      { value: 2, label: "Vespertino" },
-      { value: 3, label: "Noturno" },
-      { value: 4, label: "Integral" },
-    ]
-  },
-  {
-    value: 4, label: 'Nível Acadêmico', type: 'select',
-    options: [
-      { value: 1, label: "Graduação" },
-      { value: 2, label:"Seqüencial de Formação Específica" },
-    ]
-  },
-  {
-    value: 5, label: 'Modalidade de Ensino', type: 'select',
-    options: [
-      { value: 1, label: "Presencial" },
-      { value: 2, label:"Curso a Distância" },
-    ]
-  },
-];

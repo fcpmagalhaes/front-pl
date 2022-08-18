@@ -15,7 +15,6 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
-import { collegeOptionsMock } from '../../../mock/filters';
 import { useSelector, useDispatch } from 'react-redux';
 import { Creators } from '../../../store/infographic/actions';
 
@@ -48,28 +47,16 @@ function CollegeStep() {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const { rangeYears, collegeNames, loading } = useSelector((state) => {
+  const { rangeYears, collegeNames, collegeOptions, loading } = useSelector((state) => {
     return state.infographic;
   });
 
   const [collegeFilters, setCollegeFilters] = useState([]);
   const [refinedFilters, setRefinedFilters] = useState([]);
-  const [collegeNamesOptions, setCollegeNamesOptions] = useState([]);
 
   useEffect(() => {
     dispatch(Creators.loadCollege(rangeYears));
   }, []);
-
-  useEffect(() => {
-    if (collegeNames.length !== 0) {
-      setCollegeNamesOptions([
-        {
-          value: 1, label: 'Nome do Curso', type: 'select',
-          options: collegeNames
-        }
-      ])
-    }
-  }, [collegeNames]);
 
   useEffect(() => {
     if (refinedFilters.length !== 0) {
@@ -138,13 +125,14 @@ function CollegeStep() {
     );
   }
 
-  function listButtons(item) {
+  function listButtons(item, index) {
     return (
       <ListItem
         classes={{ root: classes.listFilters }}
-        key={item.value}                        
+        key={index}                       
       >
         <Button
+        key={index}
           color="primary"
           variant={verifyFilterSelected(item) ? "outlined" : "contained"}
           onClick={() => addRemoveFilter(item)}
@@ -161,14 +149,14 @@ function CollegeStep() {
     <Grid container>
       <Grid item md={3} style={{ padding: 20 }}>
         <List height="100%" width="100%" display="flex">
-          {collegeOptionsMock.map((item) => {
+          {collegeOptions.map((item, index) => {
             return (
-              listButtons(item)
+              listButtons(item, index)
             );
           })}
-          {collegeNamesOptions.map((item) => {
+          {collegeNames.map((item, index) => {
             return (
-              listButtons(item)
+              listButtons(item, index)
             );
           })}
         </List>

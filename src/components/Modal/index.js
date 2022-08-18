@@ -69,7 +69,7 @@ export default function Modal() {
   return (
     <div>
      
-      <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}  fullWidth={true} maxWidth={true}>
+      <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open} fullWidth={true} maxWidth={'xl'}>
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
         </DialogTitle>
         <Ontology />

@@ -8,8 +8,10 @@ const INITIAL_STATE = {
   openModal: false,
   rangeYears: [],
   iesNames: [],
+  iesOptions: [],
   iesFilters: [],
   collegeNames: [],
+  collegeOptions: [],
   collegeFilters: [],
   studentFilters: [],
   researchData: [],
@@ -17,8 +19,6 @@ const INITIAL_STATE = {
 
 // Reducer
 export default function infographic(state = INITIAL_STATE, action) {
-  // console.log('payload', action.payload);
-  console.log('state', state);
   switch (action.type) {
     case Types.UPDATE_STEP:
       return {
@@ -39,9 +39,12 @@ export default function infographic(state = INITIAL_STATE, action) {
     case Types.SET_IES_NAMES:
       return {
         ...state,
-        loading: false,
-        error: false,
         iesNames: action.payload.iesNames
+      };
+    case Types.SET_IES_OPTIONS:
+      return {
+        ...state,
+        iesOptions: action.payload.iesOptions
       };
     case Types.SET_IES_FILTERS:
       return {
@@ -57,9 +60,12 @@ export default function infographic(state = INITIAL_STATE, action) {
     case Types.SET_COLLEGE_NAMES:
       return {
         ...state,
-        loading: false,
-        error: false,
         collegeNames: action.payload.collegeNames
+      };
+    case Types.SET_COLLEGE_OPTIONS:
+      return {
+        ...state,
+        collegeOptions: action.payload.collegeOptions
       };
     case Types.SET_COLLEGE_FILTERS:
       return {

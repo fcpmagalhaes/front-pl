@@ -15,7 +15,6 @@ import {
 import { makeStyles, createTheme, ThemeProvider } from '@material-ui/core/styles';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
-// import { iesOptionsMock } from '../../../mock/filters';
 import { useSelector, useDispatch } from 'react-redux';
 import { Creators } from '../../../store/infographic/actions';
 

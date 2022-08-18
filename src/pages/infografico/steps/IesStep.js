@@ -73,8 +73,6 @@ function IesStep() {
     }
   }, [refinedFilters]);
 
-
-
   function showIcon(item) {
     if (verifyFilterSelected(item)) {
       return (<><RemoveCircleOutlineIcon style={{ marginLeft: '10px' }} /></>);

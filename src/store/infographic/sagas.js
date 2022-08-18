@@ -20,12 +20,30 @@ async function getIesByYears(values) {
   });
 }
 
+async function getIesFilters() {
+  return api.post('/ies_filters');
+}
+
 async function getCollegeByYears(values) {
   const payload = {
     range: values,
   };
 
   return api.post('/college_names', {
+    data: payload,
+  });
+}
+
+async function getCollegeFilters() {
+  return api.post('/college_filters');
+}
+
+async function getStudentFilters(values) {
+  const payload = {
+    range: values,
+  };
+
+  return api.post('/student_filters', {
     data: payload,
   });
 }
@@ -52,11 +70,21 @@ function standardizeKeyValue(arrayObject, code, name) {
 
 function* loadIes(values) {
   try {
-    const response = yield call(getIesByYears, values.payload);
+    const responseNames = yield call(getIesByYears, values.payload);
+    const responseFilters = yield call(getIesFilters);
+    
     yield put({
       type: Types.SET_IES_NAMES,
       payload: {
-        iesNames: standardizeKeyValue(response.data, 'co_ies', 'no_ies'),
+        iesNames: responseNames.data,
+        // iesNames: standardizeKeyValue(responseNames.data, 'co_ies', 'no_ies'),
+      },
+    });
+
+    yield put({
+      type: Types.SET_IES_OPTIONS,
+      payload: {
+        iesOptions: responseFilters.data,
       },
     });
   } catch (err) {
@@ -66,12 +94,21 @@ function* loadIes(values) {
 
 function* loadCollege(values) {
   try {
-    const response = yield call(getCollegeByYears, values.payload);
+    const responseNames = yield call(getCollegeByYears, values.payload);
+    const responseFilters = yield call(getCollegeFilters);
     yield put({
       type: Types.SET_COLLEGE_NAMES,
       payload: {
-        collegeNames: standardizeKeyValue(response.data, 'co_curso', 'no_curso'),
+        collegeNames: standardizeKeyValue(responseNames.data, 'co_curso', 'no_curso'),
       },
+    });
+
+    yield put({
+      type: Types.SET_COLLEGE_OPTIONS,
+      payload: {
+        collegeOptions: responseFilters.data,
+      },
+      
     });
   } catch (err) {
     yield put({ type: Types.LOAD_ERROR });

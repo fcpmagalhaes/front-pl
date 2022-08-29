@@ -12,7 +12,7 @@ import {
   FormControlLabel,
   Checkbox,
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, createTheme, ThemeProvider } from '@material-ui/core/styles';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import { useSelector, useDispatch } from 'react-redux';
@@ -42,12 +42,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const theme = createTheme({
+  typography: {
+    subtitle1: {
+      fontStyle: 'bold',
+      color: 'darkRed',
+    },
+  },
+});
+
 
 function CollegeStep() {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const { rangeYears, collegeNames, collegeOptions, loading } = useSelector((state) => {
+  const { rangeYears, iesFilters, collegeNames, collegeOptions, loading } = useSelector((state) => {
     return state.infographic;
   });
 
@@ -55,7 +64,7 @@ function CollegeStep() {
   const [refinedFilters, setRefinedFilters] = useState([]);
 
   useEffect(() => {
-    dispatch(Creators.loadCollege(rangeYears));
+    dispatch(Creators.loadCollege({rangeYears, iesFilters}));
   }, []);
 
   useEffect(() => {
@@ -174,12 +183,17 @@ function CollegeStep() {
           refineFilters()
           :
           <Box className={classes.instructionText}>
-            <Typography variant="subtitle2" >
-              Seus filtros selecionados serão exibidos e refinados aqui.
-            </Typography>
-            <Typography variant="subtitle1" >
-              Caso nenhuma opção seja selecionada, os filtros referentes aos Cursos serão desconsiderados.
-            </Typography>
+            <ThemeProvider theme={theme}>
+              <Typography variant="subtitle2" >
+                Seus filtros selecionados serão exibidos e refinados aqui.
+              </Typography>
+              <Typography variant="subtitle2" >
+                Caso nenhuma opção seja selecionada, os filtros referentes aos Cursos serão desconsiderados.
+              </Typography>
+              <Typography variant="subtitle1" >
+                  Nome do Curso exibe opções aplicando filtros das telas anteriores.
+              </Typography>
+            </ThemeProvider>
           </Box>
         }
       </Grid>

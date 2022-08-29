@@ -24,9 +24,10 @@ async function getIesFilters() {
   return api.post('/ies_filters');
 }
 
-async function getCollegeByYears(values) {
+async function getCollegeByYearsAndIes({rangeYears, iesFilters}) {
   const payload = {
-    range: values,
+    range: rangeYears,
+    iesFilters: iesFilters
   };
 
   return api.post('/college_names', {
@@ -38,14 +39,8 @@ async function getCollegeFilters() {
   return api.post('/college_filters');
 }
 
-async function getStudentFilters(values) {
-  const payload = {
-    range: values,
-  };
-
-  return api.post('/student_filters', {
-    data: payload,
-  });
+async function getStudentFilters() {
+  return api.post('/student_filters');
 }
 
 function standardizeKeyValue(arrayObject, code, name) {
@@ -92,9 +87,9 @@ function* loadIes(values) {
   }
 }
 
-function* loadCollege(values) {
+function* loadCollege({payload}) {
   try {
-    const responseNames = yield call(getCollegeByYears, values.payload);
+    const responseNames = yield call(getCollegeByYearsAndIes, payload);
     const responseFilters = yield call(getCollegeFilters);
     yield put({
       type: Types.SET_COLLEGE_NAMES,
@@ -107,6 +102,20 @@ function* loadCollege(values) {
       type: Types.SET_COLLEGE_OPTIONS,
       payload: {
         collegeOptions: responseFilters.data,
+      },
+    });
+  } catch (err) {
+    yield put({ type: Types.LOAD_ERROR });
+  }
+}
+
+function* loadStudent() {
+  try {
+    const responseFilters = yield call(getStudentFilters);
+    yield put({
+      type: Types.SET_STUDENT_OPTIONS,
+      payload: {
+        studentOptions: responseFilters.data,
       },
     });
   } catch (err) {
@@ -132,5 +141,6 @@ function* loadResearch(values) {
 export function* infographicSagas() {
   yield takeLatest(Types.LOAD_IES, loadIes);
   yield takeLatest(Types.LOAD_COLLEGE, loadCollege);
+  yield takeLatest(Types.LOAD_STUDENT, loadStudent);
   yield takeLatest(Types.LOAD_RESEARCH, loadResearch);
 }

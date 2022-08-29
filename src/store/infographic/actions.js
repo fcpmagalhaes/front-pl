@@ -1,7 +1,9 @@
 export const Types = {
   LOAD_ERROR: 'infographic/LOAD_ERROR',
+
   LOAD_IES: 'infographic/LOAD_IES',
   LOAD_COLLEGE: 'infographic/LOAD_COLLEGE',
+  LOAD_STUDENT: 'infographic/LOAD_STUDENT',
   LOAD_RESEARCH: 'infographic/LOAD_RESEARCH',
 
   SET_RANGE_YEARS: 'infographic/SET_RANGE_YEARS',
@@ -14,9 +16,10 @@ export const Types = {
   SET_COLLEGE_OPTIONS: 'infographic/SET_COLLEGE_OPTIONS',
   SET_COLLEGE_FILTERS: 'infographic/SET_COLLEGE_FILTERS',
   
+  SET_STUDENT_OPTIONS: 'infographic/SET_STUDENT_OPTIONS',
   SET_STUDENT_FILTERS: 'infographic/SET_STUDENT_FILTERS',
-  SET_RESEARCH: 'infographic/SET_RESEARCH',
 
+  SET_RESEARCH: 'infographic/SET_RESEARCH',
   UPDATE_STEP: 'infographic/UPDATE_STEP',
   SET_MODAL: 'infographic/SET_MODAL'
 };
@@ -39,13 +42,16 @@ export const Creators = {
     type: Types.SET_IES_FILTERS,
     payload: refinedFilters,
   }),
-  loadCollege: (rangeYears) => ({
+  loadCollege: (payload) => ({
     type: Types.LOAD_COLLEGE,
-    payload: rangeYears,
+    payload: payload,
   }),
   setCollegeFilters: (refinedFilters) => ({
     type: Types.SET_COLLEGE_FILTERS,
     payload: refinedFilters,
+  }),
+  loadStudent: () => ({
+    type: Types.LOAD_STUDENT
   }),
   setStudentFilters: (refinedFilters) => ({
     type: Types.SET_STUDENT_FILTERS,

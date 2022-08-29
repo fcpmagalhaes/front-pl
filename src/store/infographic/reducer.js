@@ -13,6 +13,7 @@ const INITIAL_STATE = {
   collegeNames: [],
   collegeOptions: [],
   collegeFilters: [],
+  studentOptions: [],
   studentFilters: [],
   researchData: [],
 };
@@ -39,11 +40,13 @@ export default function infographic(state = INITIAL_STATE, action) {
     case Types.SET_IES_NAMES:
       return {
         ...state,
+        loading: false,
         iesNames: action.payload.iesNames
       };
     case Types.SET_IES_OPTIONS:
       return {
         ...state,
+        loading: false,
         iesOptions: action.payload.iesOptions
       };
     case Types.SET_IES_FILTERS:
@@ -60,17 +63,31 @@ export default function infographic(state = INITIAL_STATE, action) {
     case Types.SET_COLLEGE_NAMES:
       return {
         ...state,
+        loading: false,
         collegeNames: action.payload.collegeNames
       };
     case Types.SET_COLLEGE_OPTIONS:
       return {
         ...state,
+        loading: false,
         collegeOptions: action.payload.collegeOptions
       };
     case Types.SET_COLLEGE_FILTERS:
       return {
         ...state,
         collegeFilters: action.payload
+      };
+    case Types.LOAD_STUDENT:
+      return {
+        ...state,
+        loading: true,
+        error: false
+      };
+    case Types.SET_STUDENT_OPTIONS:
+      return {
+        ...state,
+        loading: false,
+        studentOptions: action.payload.studentOptions
       };
     case Types.SET_STUDENT_FILTERS:
       return {

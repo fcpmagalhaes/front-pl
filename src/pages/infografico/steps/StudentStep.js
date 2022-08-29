@@ -15,7 +15,6 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
-import { studentOptionsMock } from '../../../mock/filters'
 import { useSelector, useDispatch } from 'react-redux';
 import { Creators } from '../../../store/infographic/actions';
 
@@ -47,8 +46,16 @@ function StudentStep() {
   const classes = useStyles();
   const dispatch = useDispatch();
 
+  const { studentOptions, loading } = useSelector((state) => {
+    return state.infographic;
+  });
+
   const [studentFilters, setStudentFilters] = useState([]);
   const [refinedFilters, setRefinedFilters] = useState([]);
+
+  useEffect(() => {
+    dispatch(Creators.loadStudent());
+  }, []);
 
   useEffect(() => {
     if (refinedFilters.length !== 0) {
@@ -121,7 +128,7 @@ function StudentStep() {
     <Grid container>
       <Grid item md={3} style={{ padding: 20 }}>
         <List height="100%" width="100%" display="flex">
-          {studentOptionsMock.map((item, index) => {
+          {studentOptions.map((item, index) => {
             return (
               <ListItem
                 classes={{ root: classes.listFilters }}

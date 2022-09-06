@@ -97,6 +97,17 @@ function IesStep() {
     }
   }
 
+  function verifyDisableFilter(item) {
+    if (item.value === 1 || item.value === 2) {
+      const isDisable = refinedFilters.some(filter => filter.value === 3);
+      return isDisable;
+    }
+    if (item.value === 3) {
+      const isDisable = refinedFilters.some(filter => filter.value === 1 || filter.value === 2)
+      return isDisable;
+    }
+  }
+
   function verifyFilterSelected(item) {
     return iesFilters.some(filter => filter.value === item.value);
   }
@@ -138,7 +149,7 @@ function IesStep() {
     return (
       <ListItem
         classes={{ root: classes.listFilters }}
-        key={index}                      
+        key={index}
       >
         <Button
           key={index}
@@ -146,6 +157,7 @@ function IesStep() {
           variant={verifyFilterSelected(item) ? "outlined" : "contained"}
           onClick={() => addRemoveFilter(item)}
           classes={{ root: classes.filterButton }}
+          disabled={verifyDisableFilter(item)}
         >
           {item.label}
           {showIcon(item)}

@@ -4,6 +4,7 @@ import {
   InputLabel,
   Input,
   InputAdornment,
+  TextField
 } from '@material-ui/core';
 
 const InputValue = ({ item, refinedFilters, setRefinedFilters  }) => {
@@ -26,12 +27,14 @@ const InputValue = ({ item, refinedFilters, setRefinedFilters  }) => {
   return (
     <>
       <InputLabel htmlFor="standard-adornment-amount">{item.label}</InputLabel>
-      <Input
+      <TextField
         id="standard-adornment-amount"
         value={amount}
         onChange={handleChange}
-        // startAdornment={<InputAdornment position="start">R$</InputAdornment>}
         type="number"
+        // inputProps={{
+        //   maxLength: 3 
+        // }}
       />
     </>
   );

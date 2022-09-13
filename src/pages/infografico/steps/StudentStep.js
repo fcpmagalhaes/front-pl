@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
   filterButton: {
     textAlign: 'left',
     fontSize: '12px',
+    width: 'inherit'
   },
   navigationButton: {
     paddingLeft: '30px',

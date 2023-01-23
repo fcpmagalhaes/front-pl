@@ -126,7 +126,6 @@ function* loadStudent() {
 function* loadResearch(values) {
   try {
     const response = yield call(getResearchResult, values.payload);
-    console.log('loadResearch', response);
     yield put({
       type: Types.SET_RESEARCH,
       payload: {

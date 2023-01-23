@@ -20,6 +20,7 @@ export const Types = {
   SET_STUDENT_FILTERS: 'infographic/SET_STUDENT_FILTERS',
 
   SET_RESEARCH: 'infographic/SET_RESEARCH',
+  SET_CHART: 'infographic/SET_CHART',
   UPDATE_STEP: 'infographic/UPDATE_STEP',
   SET_MODAL: 'infographic/SET_MODAL'
 };
@@ -65,5 +66,8 @@ export const Creators = {
     type: Types.SET_MODAL,
     payload: openModal,
   }),
-
+  setChartType: (chart) => ({
+    type: Types.SET_CHART,
+    payload: chart,
+  })
 };

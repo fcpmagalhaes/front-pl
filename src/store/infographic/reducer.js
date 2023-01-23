@@ -16,6 +16,7 @@ const INITIAL_STATE = {
   studentOptions: [],
   studentFilters: [],
   researchData: [],
+  chartType: ''
 };
 
 // Reducer
@@ -118,6 +119,11 @@ export default function infographic(state = INITIAL_STATE, action) {
       return {
         ...state,
         openModal: action.payload.openModal
+      };
+    case Types.SET_CHART:
+      return {
+        ...state,
+        chartType: action.payload
       };
 
     default:

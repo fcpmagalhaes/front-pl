@@ -7,6 +7,8 @@ import {
   Card,
   CardActionArea
 } from '@material-ui/core';
+import { useSelector, useDispatch } from 'react-redux';
+import { Creators } from '../../../store/infographic/actions';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -25,18 +27,32 @@ const useStyles = makeStyles((theme) => ({
 function ChartSelectStep() {
   const classes = useStyles();
   const [chart, setChart] = useState('');
+  const dispatch = useDispatch();
+
+  const { rangeYears, iesFilters, collegeFilters, studentFilters, loading } = useSelector((state) => {
+    return state.infographic;
+  });
+
+  useEffect(() => {
+    dispatch(Creators.loadResearch({rangeYears, iesFilters, collegeFilters, studentFilters}));
+  }, []);
 
   function verifyChartSelected(area) {
     if (chart === area) {
       return classes.area;
     }
-  }
+  };
+
+  function setChartType(chart) {
+    setChart(chart);
+    dispatch(Creators.setChartType(chart));
+  };
 
   return (
     <Grid container direction="row" spacing={3} justifyContent="space-evenly" alignItems="center">
       <Grid item md={5} xs={12}>
         <Card className={classes.root}>
-          <CardActionArea onClick={() => setChart('area')} className={verifyChartSelected('area')}>
+          <CardActionArea onClick={() => setChartType('area')} className={verifyChartSelected('area')}>
             <CardMedia
               component="img"
               alt="Gráfico de Área"
@@ -54,7 +70,7 @@ function ChartSelectStep() {
       </Grid>
       <Grid item md={5} xs={12}>
         <Card className={classes.root}>
-          <CardActionArea onClick={() => setChart('bar')} className={verifyChartSelected('bar')}>
+          <CardActionArea onClick={() => setChartType('bar')} className={verifyChartSelected('bar')}>
             <CardMedia
               component="img"
               alt="Gráfico de Barra"
@@ -72,7 +88,7 @@ function ChartSelectStep() {
       </Grid>
       <Grid item md={5} xs={12}>
         <Card className={classes.root}>
-          <CardActionArea onClick={() => setChart('line')} className={verifyChartSelected('line')}>
+          <CardActionArea onClick={() => setChartType('line')} className={verifyChartSelected('line')}>
             <CardMedia
               component="img"
               alt="Gráfico de Linha"
@@ -90,7 +106,7 @@ function ChartSelectStep() {
       </Grid>
       <Grid item md={5} xs={12}>
         <Card className={classes.root}>
-          <CardActionArea onClick={() => setChart('pie')} className={verifyChartSelected('pie')}>
+          <CardActionArea onClick={() => setChartType('pie')} className={verifyChartSelected('pie')}>
             <CardMedia
               component="img"
               alt="Gráfico de Pizza"

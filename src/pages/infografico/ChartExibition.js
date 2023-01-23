@@ -1,7 +1,7 @@
 // import "./styles.css";
-import React from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 import BarChartComponent from '../../components/charts/BarChart';
 import AreaChartComponent from '../../components/charts/AreaChart';
 import LineChartComponent from '../../components/charts/LineChart';
@@ -31,10 +31,14 @@ function getChartContent(step) {
 
 function ChartExibition() {
   const classes = useStyles();
+  const { chartType } = useSelector((state) => {
+    return state.infographic;
+  });
+
   return (
     <Grid container direction="row" spacing={3} justifyContent="space-evenly" alignItems="center">
       <Grid item md={6} xs={12}>
-        {getChartContent('bar')}
+        {getChartContent(chartType)}
       </Grid>
     </Grid>
   );

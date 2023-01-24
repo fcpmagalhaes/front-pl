@@ -6,7 +6,8 @@ import {
   YAxis,
   Tooltip,
   Bar,
-  Cell
+  Cell,
+  Label
 } from "recharts";
 import { useSelector } from 'react-redux';
 import ResearchDescription from '../../ResearchDescription';
@@ -38,11 +39,12 @@ export default function BarChartComponent() {
           top: 5,
           right: 30,
           left: 20,
-          bottom: 5
+          bottom: 30
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="ano">
+          <Label value="ano" offset={0} position="bottom" />
         </XAxis>
         <YAxis label={{ value: 'quantidade total', angle: -90, position: 'insideLeft' }} />
         <Tooltip />

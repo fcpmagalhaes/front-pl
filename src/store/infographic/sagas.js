@@ -126,10 +126,16 @@ function* loadStudent() {
 function* loadResearch(values) {
   try {
     const response = yield call(getResearchResult, values.payload);
+    const data = response.data.map((data) => {
+      return {
+        ano: data.year,
+        total: data.finalCount
+      }
+    });
     yield put({
       type: Types.SET_RESEARCH,
       payload: {
-        researchData: response.data,
+        researchData: data,
       },
     });
   } catch (err) {

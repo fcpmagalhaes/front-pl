@@ -16,7 +16,7 @@ const INITIAL_STATE = {
   studentOptions: [],
   studentFilters: [],
   researchData: [],
-  chartType: ''
+  chartType: null
 };
 
 // Reducer

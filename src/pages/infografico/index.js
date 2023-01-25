@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const steps = ['Período da Pesquisa','Instituição de Ensino', 'Curso', 'Aluno', 'Gráfico'];
+const steps = ['Período da Pesquisa','Instituição de Ensino', 'Curso', 'Aluno', 'Gráfico', 'Resultado'];
 
 function getStepContent(step) {
   switch (step) {
@@ -61,6 +61,8 @@ function getStepContent(step) {
       return <StudentStep />;
     case 4:
       return <ChartSelectStep />;
+    case 5:
+      return <ChartExibition />;
     default:
       throw new Error('Unknown step');
   }
@@ -69,7 +71,7 @@ function getStepContent(step) {
 function Infograficos() {
   const classes = useStyles();
 
-  const { activeStep, loading, rangeYears, iesFilters, collegeFilters, studentFilters } = useSelector((state) => {
+  const { activeStep, loading, rangeYears, iesFilters, collegeFilters, studentFilters, chartType } = useSelector((state) => {
     return state.infographic;
   });
   
@@ -92,7 +94,15 @@ function Infograficos() {
   };
 
   const handleBack = () => {
+    if (activeStep === 5) {
+      dispatch(Creators.setChartType(null));
+    }
     dispatch(Creators.updateStep(activeStep - 1));
+  };
+
+  const verifyBlock = () => {
+    if (activeStep === steps.length - 2 && chartType === null) return true;
+    return false;
   };
 
   return (
@@ -109,30 +119,27 @@ function Infograficos() {
                   </Step>
                 ))}
               </Stepper>
-              <>
-                {activeStep === steps.length ? (
-                  <ChartExibition />
-                ) : (
-                  <>
-                    {getStepContent(activeStep)}
-                    <div className={classes.buttons}>
-                      {activeStep !== 0 && (
-                        <Button onClick={handleBack} className={classes.button}>
-                          Voltar
-                        </Button>
-                      )}
+                <>
+                  {getStepContent(activeStep)}
+                  <div className={classes.buttons}>
+                    {activeStep !== 0 && (
+                      <Button onClick={handleBack} className={classes.button}>
+                        Voltar
+                      </Button>
+                    )}
+                    {activeStep !== steps.length - 1 && (
                       <Button
                         variant="contained"
                         color="secondary"
                         onClick={handleNext}
                         className={classes.button}
+                        disabled={verifyBlock()}
                       >
-                        {activeStep === steps.length - 1 ? 'Gerar Infográfico' : 'Avançar'}
+                        {activeStep === steps.length - 2 ? 'Gerar Infográfico' : 'Avançar'}
                       </Button>
-                    </div>
-                  </>
-                )}
-              </>
+                    )}
+                  </div>
+                </>
             </Paper>
           </main>
     </Layout>

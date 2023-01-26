@@ -16,7 +16,7 @@ function getChartContent(step) {
     case 'pie':
       return <PieChartComponent />;
     default:
-      throw new Error('Unknown chart');
+      return <></>;
   }
 }
 

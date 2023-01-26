@@ -16,7 +16,7 @@ const INITIAL_STATE = {
   studentOptions: [],
   studentFilters: [],
   researchData: [],
-  chartType: null
+  chartType: null,
 };
 
 // Reducer
@@ -36,77 +36,77 @@ export default function infographic(state = INITIAL_STATE, action) {
       return {
         ...state,
         loading: true,
-        error: false
+        error: false,
       };
     case Types.SET_IES_NAMES:
       return {
         ...state,
         loading: false,
-        iesNames: action.payload.iesNames
+        iesNames: action.payload.iesNames,
       };
     case Types.SET_IES_OPTIONS:
       return {
         ...state,
         loading: false,
-        iesOptions: action.payload.iesOptions
+        iesOptions: action.payload.iesOptions,
       };
     case Types.SET_IES_FILTERS:
       return {
         ...state,
-        iesFilters: action.payload
+        iesFilters: action.payload,
       };
     case Types.LOAD_COLLEGE:
       return {
         ...state,
         loading: true,
-        error: false
+        error: false,
       };
     case Types.SET_COLLEGE_NAMES:
       return {
         ...state,
         loading: false,
-        collegeNames: action.payload.collegeNames
+        collegeNames: action.payload.collegeNames,
       };
     case Types.SET_COLLEGE_OPTIONS:
       return {
         ...state,
         loading: false,
-        collegeOptions: action.payload.collegeOptions
+        collegeOptions: action.payload.collegeOptions,
       };
     case Types.SET_COLLEGE_FILTERS:
       return {
         ...state,
-        collegeFilters: action.payload
+        collegeFilters: action.payload,
       };
     case Types.LOAD_STUDENT:
       return {
         ...state,
         loading: true,
-        error: false
+        error: false,
       };
     case Types.SET_STUDENT_OPTIONS:
       return {
         ...state,
         loading: false,
-        studentOptions: action.payload.studentOptions
+        studentOptions: action.payload.studentOptions,
       };
     case Types.SET_STUDENT_FILTERS:
       return {
         ...state,
-        studentFilters: action.payload
+        studentFilters: action.payload,
       };
     case Types.LOAD_RESEARCH:
       return {
         ...state,
         loading: true,
-        error: false
+        error: false,
       };
     case Types.SET_RESEARCH:
       return {
         ...state,
         loading: false,
         error: false,
-        researchData: action.payload.researchData
+        researchData: action.payload.researchData,
       };
 
     case Types.LOAD_ERROR:
@@ -118,12 +118,12 @@ export default function infographic(state = INITIAL_STATE, action) {
     case Types.SET_MODAL:
       return {
         ...state,
-        openModal: action.payload.openModal
+        openModal: action.payload.openModal,
       };
     case Types.SET_CHART:
       return {
         ...state,
-        chartType: action.payload
+        chartType: action.payload,
       };
 
     default:

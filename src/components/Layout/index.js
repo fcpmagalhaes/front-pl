@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import clsx from 'clsx';
@@ -41,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     overflow: 'auto',
   },
-}))
+}));
 
 function Layout({ children, title }) {
   const classes = useStyles();
@@ -50,30 +49,32 @@ function Layout({ children, title }) {
   const router = useRouter();
 
   useEffect(() => {
-    if(router.pathname === '/infografico') {
+    if (router.pathname === '/infografico') {
       setOpenNav(false);
     }
-  }, [])
+  }, []);
 
   return (
     <>
-      <Head> 
+      <Head>
         <title>{title}</title>
-        <meta charSet="utf-8"></meta>
+        <meta charSet="utf-8" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <div className={classes.root}>
         <TopBar setOpenNav={setOpenNav} openNav={openNav} />
-        <NavBar openNav={openNav}/>
+        <NavBar openNav={openNav} />
         <Modal />
-        <div className={clsx(classes.wrapper, !openNav && classes.noPaddingLeft)}>
+        <div
+          className={clsx(classes.wrapper, !openNav && classes.noPaddingLeft)}
+        >
           <div className={classes.contentContainer}>
             <div className={classes.content}>{children}</div>
           </div>
         </div>
       </div>
     </>
-  )
+  );
 }
 
 export default Layout;

@@ -1,8 +1,5 @@
-import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
-
-import { Creators } from '../../store/infographic/actions';
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -18,6 +15,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import AccountTreeOutlined from '@material-ui/icons/AccountTreeOutlined';
 import Apps from '@material-ui/icons/Apps';
 import MoreVert from '@material-ui/icons/MoreVert';
+import { Creators } from '../../store/infographic/actions';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,26 +39,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function TopBar({setOpenNav, openNav}) {
+function TopBar({ setOpenNav, openNav }) {
   const classes = useStyles();
   const session = false;
   const router = useRouter();
 
-  const { openModal, loading } = useSelector((state) => {
-    return state.infographic;
-  });
+  const { openModal, loading } = useSelector((state) => state.infographic);
 
   const dispatch = useDispatch();
-
 
   const handleDrawer = () => {
     setOpenNav(!openNav);
   };
 
   const handleClickOpen = () => {
-    dispatch(Creators.setModal({openModal: !openModal}));
+    dispatch(Creators.setModal({ openModal: !openModal }));
   };
-
 
   return (
     <AppBar className={classes.root} color="default">
@@ -74,13 +68,9 @@ function TopBar({setOpenNav, openNav}) {
           >
             <MenuIcon />
           </IconButton>
-          <img
-            src='/cic-logo.png'
-            alt="logo cic"
-            className={classes.logo}
-          />
+          <img src="/cic-logo.png" alt="logo cic" className={classes.logo} />
         </Box>
-        
+
         <Box display="flex">
           <Button
             component="button"
@@ -90,29 +80,29 @@ function TopBar({setOpenNav, openNav}) {
           >
             Ontologia
           </Button>
-          <IconButton className={classes.icons}>
+          {/* <IconButton className={classes.icons}>
             <MoreVert />
-          </IconButton>
-          {!session ? (
+          </IconButton> */}
+          {/* {!session ? (
             <Button
               color="secondary"
               component="a"
               variant="outlined"
               startIcon={<AccountCircle />}
-              // onClick={() => signIn('google')}
+              onClick={() => signIn('google')}
             >
               Login
             </Button>
           ) : (
             <Box display="flex" alignItems="center">
               <Avatar
-                // onClick={() => signOut()}
+                onClick={() => signOut()}
                 alt="User"
                 className={classes.avatar}
-                // src={session?.user?.image}
+                src={session?.user?.image}
               />
             </Box>
-          )}
+          )} */}
         </Box>
       </Toolbar>
     </AppBar>

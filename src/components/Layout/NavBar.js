@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import {
   makeStyles,
@@ -9,11 +8,7 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  ListSubheader,
-  Avatar,
   Divider,
-  Typography,
-  Button,
 } from '@material-ui/core';
 
 import HomeOutlined from '@material-ui/icons/HomeOutlined';
@@ -23,7 +18,6 @@ import AssignmentOutlined from '@material-ui/icons/AssignmentOutlined';
 import StorageOutlined from '@material-ui/icons/StorageOutlined';
 import InfoOutlined from '@material-ui/icons/InfoOutlined';
 import ArrowBack from '@material-ui/icons/ArrowBack';
-
 
 const useStyles = makeStyles((theme) => ({
   mobileDrawer: {
@@ -52,17 +46,32 @@ const useStyles = makeStyles((theme) => ({
 
 const primaryMenu = [
   { id: 1, label: 'Início', path: '/', icon: HomeOutlined },
-  { id: 2, label: 'Infográficos', path: '/infografico', icon: EqualizerOutlined },
+  {
+    id: 2,
+    label: 'Infográficos',
+    path: '/infografico',
+    icon: EqualizerOutlined,
+  },
 ];
 
 const secondaryManu = [
   { id: 1, label: 'Ontologia', path: '/ontologia', icon: AccountTreeOutlined },
-  { id: 2, label: 'Censo da Educação Superior', icon: AssignmentOutlined },
-  { id: 3, label: 'Dados Abertos', icon: StorageOutlined },
-  { id: 4, label: 'Sobre', icon: InfoOutlined },
+  {
+    id: 2,
+    label: 'Censo da Educação Superior',
+    path: '/em-construcao',
+    icon: AssignmentOutlined,
+  },
+  {
+    id: 3,
+    label: 'Dados Abertos',
+    path: '/em-construcao',
+    icon: StorageOutlined,
+  },
+  { id: 4, label: 'Sobre', path: '/em-construcao', icon: InfoOutlined },
 ];
 
-function NavBar({openNav}) {
+function NavBar({ openNav }) {
   const classes = useStyles();
   const router = useRouter();
 
@@ -82,10 +91,10 @@ function NavBar({openNav}) {
           classes={{
             primary: classes.listItemText,
           }}
-          primary='Voltar'
+          primary="Voltar"
         />
       </ListItem>
-      
+
       <Divider />
 
       <List>
@@ -122,7 +131,7 @@ function NavBar({openNav}) {
               button
               classes={{ root: classes.listItem }}
               selected={isSelected(item)}
-              onClick={() => router.push(item.path) }
+              onClick={() => router.push(item.path)}
             >
               <ListItemIcon>
                 <Icon style={{ color: isSelected(item) && '#1A5FC8' }} />
@@ -137,12 +146,11 @@ function NavBar({openNav}) {
           );
         })}
       </List>
-     
     </Box>
   );
 
   return (
-    <Hidden mdDown> 
+    <Hidden mdDown>
       <Drawer
         anchor="left"
         classes={{ paper: classes.desktopDrawer }}

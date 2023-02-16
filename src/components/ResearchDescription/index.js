@@ -10,8 +10,9 @@ const useStyles = makeStyles((theme) => ({
 
 const ResearchDescription = () => {
   const classes = useStyles();
-  const text =
-    'Instituição: Universidade de Brasília, curso: Computação Licenciatura, tipo de situação: formado, sexo: masculino, cor/raça: preta, parda e indígena';
+  const text = '';
+  // const text =
+  //   'Instituição: Universidade de Brasília, curso: Computação Licenciatura, tipo de situação: formado, sexo: masculino, cor/raça: preta, parda e indígena';
   return <div className={classes.textDescription}>{text}</div>;
 };
 

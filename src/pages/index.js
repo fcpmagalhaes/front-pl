@@ -26,9 +26,9 @@ export default function Home() {
       <Box mx={4} my={2}>
         <Grid container>
           <Grid item md={7} xs={12} style={{ padding: 20 }}>
-            <h1>Gerador de Dashboard</h1>
+            <h1>Gerador de Infográfico</h1>
             <Typography variant="body2">
-              O Gerador de Dashboard é uma ferramenta possibilita a produção
+              O Gerador de Infográfico é uma ferramenta possibilita a produção
               semi automática de infográficos para Jornalismo de Dados, usando
               dados do Censo de Educação Superior.
             </Typography>

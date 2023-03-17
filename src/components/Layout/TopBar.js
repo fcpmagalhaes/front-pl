@@ -78,7 +78,7 @@ function TopBar({ setOpenNav, openNav }) {
             startIcon={<AccountTreeOutlined />}
             onClick={handleClickOpen}
           >
-            Ontologia
+            Dicionário de Dados
           </Button>
           {/* <IconButton className={classes.icons}>
             <MoreVert />

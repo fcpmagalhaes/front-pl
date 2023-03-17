@@ -1,10 +1,11 @@
-import Layout from '../../components/Layout';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 import { IconButton, Box, makeStyles, Grid } from '@material-ui/core';
 
 import ZoomOutMapIcon from '@material-ui/icons/ZoomOutMap';
 import ZoomOutIcon from '@material-ui/icons/ZoomOut';
 import ZoomInIcon from '@material-ui/icons/ZoomIn';
+import Layout from '../../components/Layout';
+
 const useStyles = makeStyles((theme) => ({
   toolbox: {
     display: 'flex',
@@ -16,17 +17,17 @@ const useStyles = makeStyles((theme) => ({
   button: {
     marginLeft: '10px',
     width: '2em',
-  }
+  },
 }));
 
 export default function Ontologia() {
   const classes = useStyles();
 
   return (
-    <Layout title='Consulta Microdados INEP'>
+    <Layout title="Consulta Microdados INEP">
       <Box mx={4} my={2}>
-        <h1>Ontologia do Projeto</h1>
-        <TransformWrapper 
+        <h1>Dicionário de Dados do Projeto</h1>
+        <TransformWrapper
           defaultScale={1}
           defaultPositionX={100}
           defaultPositionY={200}
@@ -34,42 +35,40 @@ export default function Ontologia() {
           {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
             <>
               <Box className={classes.toolbox}>
-                <IconButton 
+                <IconButton
                   className={classes.button}
                   color="primary"
                   variant="outlined"
-                  onClick={() => zoomIn()} 
+                  onClick={() => zoomIn()}
                 >
-                   <ZoomInIcon />
+                  <ZoomInIcon />
                 </IconButton>
-                <IconButton 
+                <IconButton
                   className={classes.button}
                   color="primary"
                   variant="contained"
                   onClick={() => zoomOut()}
                 >
-                    <ZoomOutIcon />
+                  <ZoomOutIcon />
                 </IconButton>
                 <IconButton
-                className={classes.button}
-                color="primary"
-                variant="contained"
-                onClick={() => resetTransform()}
+                  className={classes.button}
+                  color="primary"
+                  variant="contained"
+                  onClick={() => resetTransform()}
                 >
                   <ZoomOutMapIcon />
                 </IconButton>
               </Box>
               <Grid container justifyContent="center" style={{ padding: 20 }}>
-          
                 <TransformComponent>
-                  <img src='ontologia.jpeg' style={{ maxWidth: '130vh' }}/>
+                  <img src="ontologia.jpeg" style={{ maxWidth: '130vh' }} />
                 </TransformComponent>
               </Grid>
             </>
           )}
         </TransformWrapper>
       </Box>
-   
     </Layout>
-  )
+  );
 }

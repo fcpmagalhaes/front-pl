@@ -26,11 +26,11 @@ export default function Home() {
       <Box mx={4} my={2}>
         <Grid container>
           <Grid item md={7} xs={12} style={{ padding: 20 }}>
-            <h1>Gerador de Infográfico</h1>
+            <h1>Gerador de Gráfico</h1>
             <Typography variant="body2">
-              O Gerador de Infográfico é uma ferramenta possibilita a produção
-              semi automática de infográficos para Jornalismo de Dados, usando
-              dados do Censo de Educação Superior.
+              O Gerador de Gráfico é uma ferramenta possibilita a produção semi
+              automática de gráficos para Jornalismo de Dados, usando dados do
+              Censo de Educação Superior.
             </Typography>
             <Typography variant="body2">
               Seu objetivo é auxiliar jornalistas e a sociedade civil a extrair

@@ -48,14 +48,19 @@ const primaryMenu = [
   { id: 1, label: 'Início', path: '/', icon: HomeOutlined },
   {
     id: 2,
-    label: 'Infográficos',
-    path: '/infografico',
+    label: 'Gerador de Gráfico',
+    path: '/grafico',
     icon: EqualizerOutlined,
   },
 ];
 
 const secondaryManu = [
-  { id: 1, label: 'Ontologia', path: '/ontologia', icon: AccountTreeOutlined },
+  {
+    id: 1,
+    label: 'Dicionário de Dados',
+    path: 'dicionario',
+    icon: AccountTreeOutlined,
+  },
   {
     id: 2,
     label: 'Censo da Educação Superior',
